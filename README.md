@@ -1,17 +1,17 @@
-Repo containing my first projects using the backedn of REST APIs.
+# Repo containing my first projects using the backedn of REST APIs.
 
-Technology Used:
+## Technology Used:
 
-* NPM 
+# NPM 
 
-- what is NPM
+**what is NPM**
 
-* Node / Nodemon 
+# Node / Nodemon 
 
-- differences between NODE / NODEMON
+**differences between NODE / NODEMON**
 
-* Express
+# Express
 
-- what is express for
+**what is express for**
 
-* MongoDB
+# MongoDB
