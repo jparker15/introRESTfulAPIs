@@ -1,0 +1,26 @@
+{
+  "name": "restful_api",
+  "description": "Repo containing my first projects using the backedn of REST APIs.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "devStart": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jparker15/introRESTfulAPIs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jparker15/introRESTfulAPIs/issues"
+  },
+  "homepage": "https://github.com/jparker15/introRESTfulAPIs#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
