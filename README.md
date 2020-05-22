@@ -20,6 +20,19 @@
 
 Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. 
 
+//Express Methods
+.static
+
+.json
+
+.Router
+
+.use
+
+# Morgan
+
+HTTP request logger middleware for node.js
+
 # MongoDB
 
 MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era. 
