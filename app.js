@@ -5,7 +5,7 @@ const express = require("express"),
 
     reqBodyLog = require("./middleware/reqBodyLog");
 
-//creates an express app
+//creates an express app/ an instance of Express
 const app = express();
 //__dirname - 
 //console.log(__dirname + `\static`);
@@ -13,6 +13,7 @@ const app = express();
 // use express.static everytime a request is made 
 app.use(express.static(__dirname + "/static"));
 
+// console log reqs basic summary
 app.use(morgan("dev"));
 
 app.use(express.json());
@@ -24,6 +25,10 @@ app.use("/", homeRouter);
 const userRouter = require("./routes/usersRouter");
 
 app.use("/users", userRouter);
+
+const movieRouter = require("./routes/movieRouter");
+
+app.use("/movies", movieRouter);
 
 let database = {
     movies:[ 
