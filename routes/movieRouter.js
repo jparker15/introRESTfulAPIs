@@ -49,6 +49,19 @@
 
     });
 
+    router.delete("/", getDB, (req,res) => {
+
+        console.log(req.body);
+         
+        res.json(req.body);
+    })
+
+    router.patch("/",getDB, (req,res) => {
+
+        
+
+    })
+
     // midware functions 
 
     function validNewMov (req, res, next) {
