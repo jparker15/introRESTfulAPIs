@@ -1,6 +1,9 @@
 const express = require("express"),
 
+    // routers are optionally but used for organization 
+            //subObject of express/ router handles post reqs generally 
     router = express.Router();
+
 
     router.get("/", (req,res) => {
 
