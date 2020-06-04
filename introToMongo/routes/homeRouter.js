@@ -9,9 +9,19 @@
      //route handler 
  router.get("/", (req,res) => {
     
-    res.json({
-        message:"MESSAGE",
-    });
+    // logs all movies in database
+    Movie.find((err,movies)=>{
+
+        if (err) {
+            return console.error(err);
+        }
+        console.log(movies);
+        res.json(movies)
+        
+    })
+
+    
+    
 
 });
 
