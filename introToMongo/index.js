@@ -10,7 +10,7 @@ const express = require("express"),
 
     port = process.env.PORT || 3001,
 
-    newObj = {useNewUrlParser: true, useUnifiedTopology: true},
+    newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
     connectionURI = process.env.MONGO;
 

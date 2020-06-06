@@ -98,7 +98,7 @@ const Movie = new mongoose.Schema({
                 // regex to match wiki string to url to test if link is a wikipedia link
                 wikiTest = /wiki/;
 
-            if  (!urlTest && wikiTest.test(value)){ // if URL is not valid 
+            if  (!urlTest || !wikiTest.test(value)){ // if URL is not valid 
                     // throw statement creates a custom error/ new instance of Error
                 throw new Error("Wikipedia link was invalid");
 
