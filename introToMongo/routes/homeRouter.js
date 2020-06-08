@@ -8,6 +8,8 @@
 
 const findMovie = require("../middleware/findMovie");
 
+const delMovie = require("../middleware/deleteMovie");
+
      //route handler 
  router.get("/", (req,res) => {
     
@@ -81,14 +83,16 @@ router.get("/movie/:movieID", findMovie, (req,res) => {
     })
 })
 
-router.delete("/movie/:movieID",findMovie, (req,res) =>{
-    res.status(200).json({
-        status:200,
-        message: "a movie was deleted",
-        movie: req.foundMovie
-    })
-})
+router.delete("/movie/:movieID",deleteMovie, (req, res) =>{
 
+    res.status(200).json({
+        status: 200,
+        message: "a movie was deleted",
+        movie: req.deletedMovie,
+        
+    })   
+    
+})
 
 router.post("/", async (req,res) =>{
                         //object constructor
