@@ -81,6 +81,14 @@ router.get("/movie/:movieID", findMovie, (req,res) => {
     })
 })
 
+router.delete("/movie/:movieID",findMovie, (req,res) =>{
+    res.status(200).json({
+        status:200,
+        message: "a movie was deleted",
+        movie: req.foundMovie
+    })
+})
+
 
 router.post("/", async (req,res) =>{
                         //object constructor
