@@ -10,6 +10,8 @@ const findMovie = require("../middleware/findMovie");
 
 const delMovie = require("../middleware/deleteMovie");
 
+const updateMovie = require("../middleware/updateMovie");
+
      //route handler 
  router.get("/", (req,res) => {
     
@@ -59,9 +61,9 @@ const delMovie = require("../middleware/deleteMovie");
                 message: "error occured",
                 error: err.message,
                 full_report: err
-            })
+            });
         }
-    })
+    });
 
     //handler for delete request
 // router.delete()
@@ -75,24 +77,67 @@ const delMovie = require("../middleware/deleteMovie");
     //req.params.reqparms
     // request movie by DB ID 
 router.get("/movie/:movieID", findMovie, (req,res) => {
-    res.status(200).json({
+   try{ 
+        res.status(200).json({
         status: 200,
         message: "a movie was found",
         movie: req.foundMovie,
+        });
+    }
+    catch(err){
+        console.log(err.message);
+
+        res.status(500).json({
+            status:500,
+            message: "an error has occured",
+            error:err.message
+        });
         
-    })
-})
+    }
+});
 
 router.delete("/movie/:movieID",deleteMovie, (req, res) =>{
 
-    res.status(200).json({
-        status: 200,
-        message: "a movie was deleted",
-        movie: req.deletedMovie,
+    try{
+
+        res.status(200).json({
+            status: 200,
+            message: "a movie was deleted",
+            movie: req.deletedMovie,
         
-    })   
+        });
+
+    }
+    catch (err) {
+        console.log(err.message);
+
+        res.status(500).json({
+            status:500,
+            message: "An error has occured durring DELETE Request",
+            error: err.message
+        });
+         
+    }
     
-})
+    
+});
+
+router.patch("/movie/:movieID",updateMovie,(req,res) =>{
+        try{
+            res.status(200).json({
+                status: 200,
+                message: "movie has been updated",
+                movie: req.updatedMovie,
+            });
+        }
+        catch(err){
+            res.status(500).json({
+                status:500,
+                message: "an error occured during PATCH request",
+                error: err.message
+            });
+        }
+});
 
 router.post("/", async (req,res) =>{
                         //object constructor
@@ -103,14 +148,14 @@ router.post("/", async (req,res) =>{
 
         const newMovie = await new Movie(req.body);
 
-        await newMovie.save()
+        await newMovie.save();
 
         res.status(201).json({
             status: 201,
             new_movie: newMovie,
             message: "new movie added to database",
            
-})
+        });
 
     } catch (err) {
 
@@ -118,11 +163,11 @@ router.post("/", async (req,res) =>{
 
         res.status(500).json({
 
+            status: 500,
             message: "an error has occured durring POST request",
-            error: err.message,
-            status: 500
-
-        })
+            error: err.message
+    
+        });
         
 
     }
