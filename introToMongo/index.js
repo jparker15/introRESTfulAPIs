@@ -16,15 +16,19 @@ const express = require("express"),
 
     const homeRouter = require("./routes/homeRouter");
 
+    const movieRouter = require("./routes/movieRouter");
+
     // some midware needs to go before others
     server.use(express.json());
 
     server.use(morgan("dev"));
     //express.json and morgan must be called before expressInstance.use
 
+    server.use(express.static("./public"));
+
     server.use("/", homeRouter);
 
-  
+    server.use("/movie", movieRouter);
 
    mongoose.connect(connectionURI,newObj ,() =>{
 
