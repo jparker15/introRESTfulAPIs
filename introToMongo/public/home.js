@@ -1,4 +1,4 @@
-document.body.style.backgroundColor = "black";
+
 
 window.onload = () => {
 
@@ -31,6 +31,7 @@ displayMovies = (allMovies) =>{
     for (let i = 0; i < allMovies.length; i++) {
         
         const movies = allMovies[i],
+            div = document.createElement("div"),
             title = document.createElement("h1"),
             release = document.createElement("h3"),
             movieIMG = document.createElement("img");
@@ -41,9 +42,12 @@ displayMovies = (allMovies) =>{
             movieIMG.src = movies.img;
             movieIMG.alt = movies.title + "IMG";
 
-            document.body.appendChild(title);
-            document.body.appendChild(release);
-            document.body.appendChild(movieIMG);
+            div.appendChild(title);
+            div.appendChild(release);
+            div.appendChild(movieIMG);
+
+            document.body.appendChild(div);
+           
         
     }
 }
