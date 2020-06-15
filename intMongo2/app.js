@@ -15,6 +15,8 @@ const express = require("express"),
 
     app.use("/", home);
 
+    app.use(express.static("./static"));
+
     newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
 
