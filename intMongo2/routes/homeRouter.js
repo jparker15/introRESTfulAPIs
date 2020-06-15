@@ -5,7 +5,9 @@ const express = require("express"),
     GPU = require("../models/GPU")
 
     router.get("/", (req,res) =>{
-        res.send("testeruniiyo")
+        const fileLoc = process.cwd() + `\\static\\static.html`
+
+        res.sendFile(fileLoc);
     });
 
     router.post("/", async (req,res) => {
