@@ -125,9 +125,14 @@ const Movie = new mongoose.Schema({
     inventory: {
         required: false,
 
-        type: Array,
+        type: Object,
 
-        default: []
+        default: {
+                //type Number is added for validation 
+            available:{type:Number, default: 0},
+            rented:{type:Number, default: 0}
+
+        }
     }
     
 
