@@ -82,7 +82,7 @@ function displayAllMovies(allMovies) {
 
         //adding ondblclick property to movie element
         // movieImage.ondblclick = movieRental.transferMovie;
-        clickMeText.ondblclick = transferMovie;
+        clickMeText.ondblclick = transferMovie(singleMovie);
 
         // clickMeText.style.display = 'none';
         clickMeText.value = singleMovie.title;
@@ -98,6 +98,11 @@ function rentRandomMov() {
     
 }
 
-function transferMovie() {
-    
+function transferMovie(movie) {
+    if (movie.available == true){
+        movie.available = false
+    }
+    else{
+        movie.available = true
+    }
 }
