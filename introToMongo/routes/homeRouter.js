@@ -8,7 +8,7 @@
         router.get("/", (req,res) => {
             //cwd is directory of whole project 
 
-            const fileLoc = process.cwd() + `\\public\\home.html`;
+            const fileLoc = process.cwd() + `\\public\\home-static\\home.html`;
             
             res.sendFile(fileLoc);
         });
