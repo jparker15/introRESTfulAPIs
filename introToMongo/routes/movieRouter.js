@@ -210,9 +210,11 @@ router.post("/post", async (req,res) =>{
     // if everything is successful 
     try {
 
-        const newMovie = await new Movie(req.body);
+        // const newMovie = await new Movie(req.body);
 
-        await newMovie.save();
+        // await newMovie.save();
+
+        const newMovie = await Movie.create(req.body);
 
         res.status(201).json({
             status: 201,
@@ -228,7 +230,7 @@ router.post("/post", async (req,res) =>{
         res.status(500).json({
 
             status: 500,
-            message: "an error has occured durring POST request",
+            message: "an error has occured during POST request",
             error: err.message
     
         });
@@ -236,7 +238,7 @@ router.post("/post", async (req,res) =>{
 
     }
 
-     console.log(res.body);
+     console.log(req.body);
 
     // res.send("loop prevention");
 
