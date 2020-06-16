@@ -24,7 +24,7 @@ const express = require("express"),
     server.use(morgan("dev"));
     //express.json and morgan must be called before expressInstance.use
 
-    server.use(express.static("./public"));
+    server.use(express.static("./public/home-static/"));
 
     server.use("/", homeRouter);
 
