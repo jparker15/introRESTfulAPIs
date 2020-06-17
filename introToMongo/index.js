@@ -24,7 +24,11 @@ const express = require("express"),
     server.use(morgan("dev"));
     //express.json and morgan must be called before expressInstance.use
 
-    server.use(express.static("./public/home-static/"));
+    server.set("view engine", "pug");
+
+
+    // only use for /mrental route
+    server.use("/mrental/static",express.static("./public/home-static/homePage "));
 
     server.use("/", homeRouter);
 
