@@ -72,12 +72,7 @@ const validator = require("validator");
     //schema for movie entries of database
 
 const Movie = new mongoose.Schema({
-
-    available: {
-        required: true,
-        type: Boolean
-    },
-
+    
     title: {
         unique: true,
         required: true,
@@ -129,8 +124,8 @@ const Movie = new mongoose.Schema({
 
         default: {
                 //type Number is added for validation 
-            available:{type:Number, default: 0},
-            rented:{type:Number, default: 0}
+            available:1,
+            rented:0
 
         }
     }
