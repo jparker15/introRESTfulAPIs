@@ -1,14 +1,4 @@
-img {
-    max-width: 500px;
-    background-color: aliceblue;
+body{
+    background-color: tomato;
 }
 
-div {
-    text-align: center;
-    background-color: aquamarine;
-}
-
-#movieDiv img {
-    max-width: 500px;
-    max-height: 500px;
-}
