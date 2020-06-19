@@ -1,0 +1,27 @@
+html 
+    title Movie Rentals
+
+    style 
+        include ../public/home-static/home.css
+
+    script
+        include ../public/home-static/home.js
+
+    body
+        h1=message
+
+        button#clickMe Click Someone Else
+
+        .allMovies
+            each movie in all_movies
+                if movie.inventory.available > 0
+                    .Movie(id=movie._id)
+                        h1=movie.title
+                        h3=movie.release
+                        img(src=movie.img,alt=`${movie.title} IMG`)
+                        a(href=movie.link)=`${movie.title} Wiki Page`
+                        button.deleteMovie Delete Movie
+                        button.getMovie Get More DB Info
+                        button.rentMovie Rent Movie
+
+
