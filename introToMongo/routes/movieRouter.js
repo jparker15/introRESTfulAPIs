@@ -10,21 +10,21 @@ const express = require("express"),
         
            
 
-          //route handler 
- router.get("/", (req,res) => {
+//           //route handler 
+//  router.get("/", (req,res) => {
     
-    // logs all movies in database
-    Movie.find((err,movies)=>{
+//     // logs all movies in database
+//     Movie.find((err,movies)=>{
 
-        if (err) {
-            return console.error(err);
-        }
-        console.log(movies);
-        res.json(movies)
+//         if (err) {
+//             return console.error(err);
+//         }
+//         console.log(movies);
+//         res.json(movies)
         
-    })
+//     })
 
-});
+// });
 
     // request all movies
     router.get("/all", async (req,res) => {
