@@ -1,108 +1,80 @@
 window.onload = () => {
 
-    createInitalElements()
+    const infoBtns = document.getElementsByClassName("getMovie");
 
-    devStart()
-    
-}
-function devStart() {
-
-    const xhr = new XMLHttpRequest(),
-    
-    endpoint = `${location}movie/all`;
-      
-    xhr.open('GET', endpoint, true);
-
-    xhr.onload = () => {
-
-        const response = JSON.parse(xhr.responseText);
-        //display data to DOM with function
-        console.log(response);
-
-        displayAllMovies(response.movies)
-
+    for (const button of infoBtns) {
+        button.onclick = getMovieInfo;
     }
 
-    xhr.send()
+    const deleteBtns = document.getElementsByClassName("deleteMovie")
 
-    console.log("Thank you API for allowing me to not write html code!\n");
+    for (const button of deleteBtns) {
+        button.onclick = deleteMovie;
+    }
+
+  
+    
 }
 
-function displayAllMovies(allMovies) {
+function getMovieInfo (){
+    
+    // const xhr = new XMLHttpRequest();
 
-    allMovies.forEach( singleMovie => {
-
-        // console.log(singleMovie.img);
-
-        //create html element variable that will be appended to the DOM 
-         const  
-         singleMovieDiv = createDivElement({class: 'movies'}),
-
-             movieTitle = createHeading({size: 2, text: singleMovie.title}),
-
-             movieRD = createHeading({text: `Year Released ${singleMovie.release}`, size: 4}),
-
-             movieImgDiv = createDivElement({class: 'movieImgDiv'}),
-
-             movieImage = createImg({class: 'movieImages', src: singleMovie.img, alt: singleMovie.title + ' Image'}),
-
-             IMDBlink = createHyperLink({openNewTab: true, hrefLink: singleMovie.imbdLink, text: singleMovie.title + ' IMDB Page', class: 'imbdlink'});
-
-
-        // console.log(movieTitle);
+    //    // console.log(this.parentElement);
         
-        //append to the child elements to the subdiv (one subdiv for each movie)
-        singleMovieDiv.appendChild(movieTitle);
 
-        singleMovieDiv.appendChild(movieImgDiv);
+    //     const movieID = this.parentElement.id;
 
-        singleMovieDiv.appendChild(movieRD);
+    //     const endpoint = `http://localhost:3015/movie/${movieID}`;
+    
+    //     xhr.open("GET",endpoint,true);
 
-        singleMovieDiv.appendChild(IMDBlink);
+    //     xhr.onload = () =>{
 
-        //new variable to determine what div the subdiv(movieDiv) gets appended to 
-        let appendLocation, clickMeText;
+    //         const parseResTxt = JSON.parse(xhr.responseText);
+            
+    //         console.log(parseResTxt);
+                       
+    //     };
 
-        //decide what div the movieDiv should be appened, depends on if its available or not
-        if ( singleMovie.available === true ) {
+    //     xhr.send();
 
-            appendLocation = 'avldiv';
+        //FETCH
 
-            clickMeText = createHeading({size: 5, text: 'Double Click To Rent', class: 'clickme'});
+        const movieID = this.parentElement.id,
 
-        } else {
+            endpoint = `http://localhost:3015/movie/${movieID}`;
 
-            appendLocation = 'rntdiv';
+        fetch(endpoint) 
+        .then(rs => {return rs.json()})
+        .then(res =>{
+            console.log(res);
+            
+        })
 
-            clickMeText = createHeading({size: 5, text: 'Double Click To Return', class: 'clickme'});
-        }
-
-        //append movie div to one of the main div containers
-        document.getElementById(appendLocation).appendChild(singleMovieDiv);
-
-        //adding ondblclick property to movie element
-        // movieImage.ondblclick = movieRental.transferMovie;
-        clickMeText.ondblclick = transferMovie(singleMovie);
-
-        // clickMeText.style.display = 'none';
-        clickMeText.value = singleMovie.title;
-
-        movieImgDiv.appendChild(movieImage);
-        movieImgDiv.appendChild(clickMeText);
-
-    });
-
-}
-
-function rentRandomMov() {
+        
     
 }
 
-function transferMovie(movie) {
-    if (movie.available == true){
-        movie.available = false
-    }
-    else{
-        movie.available = true
-    }
+function deleteMovie () {
+   // console.log(this);
+   // console.log(location.origin);
+    
+    const movieID = this.parentElement.id,
+
+         endpoint = `${location.origin}/movie/delete/${movieID}`,
+
+         reqObj = {method:"DELETE"};
+
+    fetch(endpoint,/*reqObj,*/ {
+        method:"DELETE"
+    })      //retrun json form of readable stream
+    .then(rs => {return rs.json()})
+    .then(res =>{
+        console.log(res);
+
+        this.parentElement.remove();
+        
+    })
+
 }
