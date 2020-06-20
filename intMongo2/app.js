@@ -10,13 +10,16 @@ const express = require("express"),
     const port = process.env.PORT || 5404;
 
     app = express();
-
+    
+    app.use(express.json());
+    
     app.use(morgan("dev"));
 
     app.use("/", home);
 
     app.use(express.static("./static"));
 
+    
     newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
 
