@@ -10,7 +10,29 @@ const express = require("express"),
         res.sendFile(fileLoc);
     });
 
-    router.post("/", async (req,res) => {
+    router.get("/all",async (req,res) =>{
+       
+        try {
+            const allEntries = await GPU.find();
+
+            res.status(200).json({
+                status:200,
+                message:"All entries were found",
+                entries: allEntries
+            });
+        }
+        catch(err){
+            res.status(500).json({
+                status:200,
+                message:"error has occured homeRouter",
+                error: err.message,
+                full_report: err
+            })
+        }
+
+    });
+
+    router.post("/post", async (req,res) => {
         try{
             const newGPU = await new GPU(req.body);
 
