@@ -1,0 +1,25 @@
+html
+    title Graphic Cards
+
+    style
+        include ../static/style.css
+
+    script
+        include ../static/static.js
+
+    body
+        h1=message
+
+        button#clickMe Emaplxe Btn
+
+        .allGPUS
+            each card in entries
+             .GPU(id=card._id)
+                h2=card.brand
+                h1=card.generation
+                h1=card.name
+                h3=card.msrp
+                img(src=card.img,alt=`${card.brand}${card.generation}${card.name} IMG`)
+                button.deleteCard Delete GPU
+                button.editCard Edit GPU
+        
