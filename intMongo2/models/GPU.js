@@ -9,6 +9,11 @@ const GPU = new mongoose.Schema({
         type: String
     },
 
+    generation:{
+        required: true,
+        type: String
+    },
+
     name: {
         required: true,
         type: String
@@ -21,6 +26,17 @@ const GPU = new mongoose.Schema({
     msrp: {
         required: true,
         type: Number
+    },
+
+    img :{
+        type: String,
+        validate: (value) => {
+            const urlTest = validator.isURL(value);
+
+            if (!urlTest){
+                throw new Error("Image Link was Invalid");
+            }
+        }
     }
 
     
