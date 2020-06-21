@@ -4,6 +4,7 @@ const express = require("express"),
     mongoose = require("mongoose"),
     morgan = require("morgan"),
     home = require("./routes/homeRouter"),
+    pug = require("pug"),
 
     connectionURI = process.env.MONGO;
 
@@ -14,6 +15,9 @@ const express = require("express"),
     app.use(express.json());
     
     app.use(morgan("dev"));
+
+        //specify default engine and provide extension
+    app.set("view engine", "pug");
 
     app.use("/", home);
 
