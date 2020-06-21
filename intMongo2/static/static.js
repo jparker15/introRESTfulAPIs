@@ -1,32 +1,42 @@
 
 window.onload = () =>{
-    
-    createInitElems()
+    const deleteBtns = document.getElementsByClassName("deleteCard");
 
-    Load()
+    for(const button of deleteBtns){
+        button.onclick = deleteCard;
+    }
+
+    const editBtns = document.getElementsByClassName("editCard");
+
+    for(const button of editBtns){
+        button.onclick = editCard;
+    }
 }
 
-function Load () {
+function deleteCard () {
 
-    const xhr = new XMLHttpRequest(),
-    
-        endpoint = `${location}all`;
+    const cardID = this.parentElement.id,
 
-        xhr.open("GET",endpoint,true);
+          endpoint = `${location.origin}/delete/${cardID}`,
 
-        xhr.onload = () => {
-            
-            const parsedData = JSON.parse(xhr.responseText);
+          reqObj = {method:"DELETE"};
 
-            console.log(parsedData.entries);
+    fetch(endpoint,reqObj)
+    .then(rs => {return rs.json()})
+    .then(res =>{
+        console.log(res);
 
+        this.parentElement.remove();
 
-            
-        }
+        window.location.reload();
+        
+    })
 
-        xhr.send();
-}
-
-function postEntry (entry) {
+    console.log(cardID);
     
 }
+
+function editCard () {
+
+}
+
