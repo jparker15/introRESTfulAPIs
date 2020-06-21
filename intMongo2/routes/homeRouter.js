@@ -2,34 +2,51 @@ const express = require("express"),
 
     router = express.Router(),
 
-    GPU = require("../models/GPU")
+    GPU = require("../models/GPU"),
 
-    router.get("/", (req,res) =>{
-        const fileLoc = process.cwd() + `\\static\\static.html`
+    findID = require("../middleware/findID");
 
-        res.sendFile(fileLoc);
-    });
+    // router.get("/", (req,res) =>{
+    //     const fileLoc = process.cwd() + `\\static\\static.html`
+
+    //     res.sendFile(fileLoc);
+    // });
 
     router.get("/all",async (req,res) =>{
        
+        const allGPUs = await GPU.find({}),
+
+              clientMsg = "Number of GPUs:" + allGPUs.length;
+
+        res.render("home", {
+            message:clientMsg,
+            entries:allGPUs
+
+        })
+
+    });
+
+    router.delete("/delete/:id",findID, async (req,res) =>{
         try {
-            const allEntries = await GPU.find();
+            await GPU.findByIdAndDelete(req.params.id);
 
             res.status(200).json({
                 status:200,
-                message:"All entries were found",
-                entries: allEntries
-            });
+                deleted: req.foundID
+            })
+            
         }
         catch(err){
+            console.log("error in homeRouter"+err.message);
+            
             res.status(500).json({
-                status:200,
-                message:"error has occured homeRouter",
-                error: err.message,
-                full_report: err
-            })
+                status:500,
+                message: "an error occured during DELETE request",
+                error: err.message
+            });
         }
-
+        console.log(req.body);
+        
     });
 
     router.post("/post", async (req,res) => {
