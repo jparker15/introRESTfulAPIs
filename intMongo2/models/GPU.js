@@ -9,13 +9,23 @@ const GPU = new mongoose.Schema({
         type: String
     },
 
-    generation:{
+    prefix: {
         required: true,
         type: String
     },
 
-    name: {
+    generation:{
         required: true,
+        type: Number
+    },
+
+    perfTier:{
+        required:true,
+        type: Number
+    },
+
+    suffix:{
+        required:false,
         type: String
     },
 
