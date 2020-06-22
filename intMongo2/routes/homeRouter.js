@@ -16,7 +16,7 @@ const express = require("express"),
        
         const allGPUs = await GPU.find({}),
 
-              clientMsg = "Number of GPUs:" + allGPUs.length;
+              clientMsg = "Number of GPUs: " + allGPUs.length;
 
         res.render("home", {
             message:clientMsg,
@@ -55,6 +55,30 @@ const express = require("express"),
 
     });
 
+    router.patch("/update/:id",findID, async (res,req) =>{
+
+        try {
+            await GPU.findByIdAndUpdate(req.params.id);
+
+            res.status(200).json({
+                status:200,
+                updated: req.foundID
+            })
+        }
+
+        catch (err) {
+
+            res.status(500).json({
+                status:500,
+                message:"an error occured during PATCH request",
+                error: err.message
+            })
+
+        }
+
+    })
+    
+
     router.post("/post", async (req,res) => {
 
         try{
@@ -80,5 +104,6 @@ const express = require("express"),
         
 
     });
-    
+
+   
 module.exports = router;
