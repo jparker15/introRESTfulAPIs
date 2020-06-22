@@ -1,3 +1,29 @@
-form {
+body {
+    background-color:black;
+    color:white;
     text-align: center;
+    justify-content: center;
+}
+
+#postForm {
+    margin-left:25%;
+    margin-right:25%;
+    margin-top:2.5%;
+    background-color:#333;
+    display:flex;
+    flex-direction: column;
+
+}
+
+input {
+    text-align: center;
+    color:lightpink;
+    background-color:#222;
+    border: dotted;
+    font-size:large;
+
+    margin-bottom:1%;
+    margin-top:1%;
+    margin-left:5%;
+    margin-right:5%;
 }
