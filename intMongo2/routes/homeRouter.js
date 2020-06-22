@@ -12,7 +12,7 @@ const express = require("express"),
     //     res.sendFile(fileLoc);
     // });
 
-    router.get("/all",async (req,res) =>{
+    router.get("/",async (req,res) =>{
        
         const allGPUs = await GPU.find({}),
 
@@ -49,33 +49,36 @@ const express = require("express"),
         
     });
 
+    router.get("/post", async (req,res) => {
+        
+        res.render("postGPU");
+
+    });
+
     router.post("/post", async (req,res) => {
+
         try{
-            const newGPU = await new GPU(req.body);
-
-            await newGPU.save();
-
+            const newGPU = await GPU.create(req.body);
+            
             res.status(201).json({
                 status:201,
                 new_gpu: newGPU,
-                message: "successfully added to database"
+                message: "new GPU added to database"
             });
         }
+        catch (err) {
 
-        catch(err){
-            console.log(err.message);
-            
+                console.log(err.message);
+                
             res.status(500).json({
-
-                status: 500,
-                message: "an error has occured during POST request",
-                error: err.message
-        
-            });
-            
+                status:500,
+                message:"an error has occured during POST request",
+                error:err.message
+            })
         }
         console.log(req.body);
         
-    });
 
+    });
+    
 module.exports = router;
