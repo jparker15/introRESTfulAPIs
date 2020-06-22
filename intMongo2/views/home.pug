@@ -15,11 +15,13 @@ html
         .allGPUS
             each card in entries
              .GPU(id=card._id)
-                h2=card.brand
-                h1=card.generation
-                h1=card.name
-                h3=card.msrp
+                h1="Brand: " + card.brand
+                h2="Model Scheme: " + card.prefix + card.generation + card.perfTier + card.suffix
+                h2="Architecture/Code Name: "+card.codeName
+                h1="MSRP:$ "+card.msrp
                 img(src=card.img,alt=`${card.brand}${card.generation}${card.name} IMG`)
-                button.deleteCard Delete GPU
-                button.editCard Edit GPU
+                button.deleteGPU Delete GPU
+                button.patchGPU Edit GPU 
+
+        
         
