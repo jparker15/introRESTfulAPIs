@@ -11,6 +11,16 @@ window.onload = () =>{
     for(const button of editBtns){
         button.onclick = editCard;
     }
+
+    postGPU.onclick = postPage;
+}
+
+function postPage () {
+
+    //change location to post route
+
+    location = `${location.origin}/post`;
+
 }
 
 function deleteCard () {
