@@ -42,7 +42,7 @@ function submitPostReq () {
     .then(response =>{
         console.log("Response:" + response);
         
-        // alert("POST REQUESTED");
+         alert("POST REQUESTED");
 
         // location = `${location.origin}`;
     })
