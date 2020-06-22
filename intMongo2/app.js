@@ -1,10 +1,12 @@
 require("dotenv").config(); 
 
 const express = require("express"),
+
     mongoose = require("mongoose"),
+
     morgan = require("morgan"),
+    
     home = require("./routes/homeRouter"),
-    pug = require("pug"),
 
     connectionURI = process.env.MONGO;
 
@@ -19,10 +21,9 @@ const express = require("express"),
         //specify default engine and provide extension
     app.set("view engine", "pug");
 
-    app.use("/", home);
-
     app.use(express.static("./static"));
 
+    app.use("/", home);
     
     newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
