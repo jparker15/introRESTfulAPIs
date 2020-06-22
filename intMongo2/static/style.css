@@ -27,3 +27,20 @@ input {
     margin-left:5%;
     margin-right:5%;
 }
+.allGPUS div{
+    width: 50%;
+    margin: 0 auto;
+    border-style:solid;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+.GPU div {
+    text-align: center;
+}
+.GPU img {
+    width: 50%;
+}
+.GPU button {
+    text-align: center;
+   
+}
