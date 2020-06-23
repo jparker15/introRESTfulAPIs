@@ -16,12 +16,22 @@ html
             each movie in all_movies
                 if movie.inventory.available > 0
                     .Movie(id=movie._id)
-                        h1=movie.title
-                        h3=movie.release
-                        img(src=movie.img,alt=`${movie.title} IMG`)
-                        a(href=movie.link)=`${movie.title} Wiki Page`
-                        button.deleteMovie Delete Movie
-                        button.getMovie Get More DB Info
-                        button.rentMovie Rent Movie
+                        .diplayMovie
+                            h1=movie.title
+                            h3=movie.release
+                            img(src=movie.img,alt=`${movie.title} IMG`)
+                            a(href=movie.link)=`${movie.title} Wiki Page`
+                            button.getMovie Get More DB Info
+                            button.rentMovie Rent Movie
+                        .editMovie
+                            input(type="text",placeholder="Enter a Movie Title",name="title")
+                            input(type="text",placeholder="Release Year",name="release")
+                            input(type="url",placeholder="Wiki Link",name="link")
+                            input(type="url",placeholder="Wiki IMG url",name="img")
+                           
+                        .adminBtns
+                            button.deleteMovie Delete Movie from DB
+                            button.editMovie Edit Movie in DB
+ 
 
 
