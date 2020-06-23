@@ -1,0 +1,51 @@
+html
+    head
+
+        title Update Your Movie Info
+
+        script
+            include ../public/home-static/update-mov.js
+            
+        style.
+            body {
+                background-color:black;
+                color:white;
+                text-align: center;
+                justifiy-content: center;
+            }
+
+            #updateMovieForm {
+                margin-left:25%;
+                margin-right:25%;
+                margin-top:2.5%;
+                background-color:#333;
+                display:flex;
+                flex-direction: column;
+
+            }
+
+            input {
+                text-align: center;
+                color:lightpink;
+                background-color:#222;
+                border: ;
+                font-size:large;
+            
+                margin-bottom:1%;
+                margin-top:1%;
+                margin-left:5%;
+                margin-right:5%;
+            }
+
+
+    body
+        form#updateMovieForm
+            input(placeholder="Enter a Movie Title", name=`title`)
+            input(placeholder="Enter a Movie ID", name=`movieID`)
+            input(placeholder="Enter Release Date",name="release",type="number",min="1900",max=new Date().getFullYear() + 1)
+            input(placeholder="Wiki Link",name="link",type="url")
+            input(placeholder="Wiki IMG Link",name="img",type="url")
+            input(placeholder="Enter Movie Quantity", name="inventory",type="number",min=0)
+
+        button#submitMovie Update A Movie in DB
+
