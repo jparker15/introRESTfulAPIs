@@ -162,7 +162,7 @@ router.patch("/patch/:movieID", findMovie, async (req,res) =>{
 
     try{
         // doesn't not send updated document
-       await Movie.update({_id: id}, req.body);
+       await Movie.updateOne({_id: id}, req.body);
 
       const updatedDocument = await Movie.findById(id);
 
