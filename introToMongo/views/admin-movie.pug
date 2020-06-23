@@ -1,0 +1,31 @@
+html    
+    head
+        title Admin Page
+        
+        style
+            include ../public/home-static/admin-movie.css
+
+        script
+            include ../public/home-static/admin-movie.js
+
+    body
+
+        mixin movieInputs 
+            input(placeholder="Enter a Movie Title", name=`title`)
+            input(placeholder="Enter Release Date",name="release",type="number",min="1900",max=new Date().getFullYear() + 1)
+            input(placeholder="Wiki Link",name="link",type="url")
+            input(placeholder="Wiki IMG Link",name="img",type="url")
+            input(placeholder="Enter Movie Quantity", name="inventory",type="number",min=0)
+
+
+        h1(style="color:lightpink") Hewwo Anywone Twere
+
+        form#newMovieForm
+            +movieInputs
+        button#submitNew Submit a New Movie to DB
+
+        form#updateMovieForm
+            +movieInputs
+            input(type="text",placeholder="enter MDB ID",name=movieID)#idInput
+
+        button#submitUpdate Update a Movie in DB
