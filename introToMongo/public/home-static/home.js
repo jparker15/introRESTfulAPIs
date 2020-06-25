@@ -60,7 +60,14 @@ function submitEditReq () { //id of mongoDB object
 
             let inputValue = iterator.value.trim();
 
-            console.log(inputValue);
+           // console.log(iterator,inputValue);
+
+            if(iterator.name === "release" && inputValue < new Date().getFullYear() - 100 || inputValue > new Date().getFullYear() + 2)   {
+                
+                // console.log(iterator,inputValue);
+                return alert(`Release Year must between ${new Date().getFullYear() - 100} and ${new Date().getFullYear() + 2}`)
+
+            }
 
             if(inputValue != ""){
 
@@ -68,6 +75,43 @@ function submitEditReq () { //id of mongoDB object
             }
 
         }
+
+        reqObj ={
+        
+            headers: {
+            "Access-Control-Allow-Origin": "*",
+    
+            Accept: "application/json",
+    
+            "content-type": "application/json",
+            },
+    
+            method: "PATCH",
+    
+            body: JSON.stringify(reqBody)
+    
+        }
+    
+    
+        const endpoint = `${location.origin}/movie/patch/${movieID}`;
+    
+        fetch(endpoint,reqObj)
+        .then(rs => {
+            if (rs.status === 200){
+                alert("Movie has been successfully updated!")
+            }
+            else{
+               alert("an error occurred during PATCH req to DB")
+
+            }
+        })
+        .then(response => {
+            console.log("Response:",response);
+
+            location.reload()
+        })
+        .catch(err => {console.log(`Error has occured, Err:${err}`);
+        })
           
     
 }
@@ -138,11 +182,11 @@ function deleteMovie () {
    // console.log(this);
    // console.log(location.origin);
                     //freeze code to run prompt before continuing DELETE req
-    let confirm = prompt(`Type "confirm" to delete document`);
+    let confirmPrompt = confirm(`click "confirm" to delete document`);
         //end request with alert if prompt isn't not met
-    if (confirm != "confirm"){
+    if (!confirmPrompt){
         return alert("document has not been Deleted")
-    };
+    }
     
     // const movieID = this.parentElement.parentElement.id,
     const movieID = this.parentElement.parentElement.id,
