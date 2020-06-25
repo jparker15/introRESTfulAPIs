@@ -12,11 +12,11 @@ html
 
         button#clickMe Click Someone Else
 
-        .allMovies
+        #allMovies
             each movie in all_movies
                 if movie.inventory.available > 0
                     .Movie(id=movie._id)
-                        .diplayMovie
+                        .displayMovie
                             h1=movie.title
                             h3=movie.release
                             img(src=movie.img,alt=`${movie.title} IMG`)
@@ -24,14 +24,17 @@ html
                             button.getMovie Get More DB Info
                             button.rentMovie Rent Movie
                         .editMovie
-                            input(type="text",placeholder="Enter a Movie Title",name="title")
-                            input(type="text",placeholder="Release Year",name="release")
-                            input(type="url",placeholder="Wiki Link",name="link")
-                            input(type="url",placeholder="Wiki IMG url",name="img")
+                            -const currentYear = new Date().getFullYear();
+                            form
+                                input(type="text",placeholder="Enter a Movie Title",name="title")
+                                input(type="number",placeholder="Release Year",name="release",min=currentYear-100,max=currentYear+2)
+                                input(type="url",placeholder="Wiki Link",name="link")
+                                input(type="url",placeholder="Wiki IMG url",name="img", pattern="wiki")
+                                button(type="button").submitEdit Submit Movie Edits
                            
                         .adminBtns
                             button.deleteMovie Delete Movie from DB
-                            button.editMovie Edit Movie in DB
+                            button.editMovieBtn Edit Movie in DB
  
 
 
