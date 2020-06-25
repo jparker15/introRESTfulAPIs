@@ -40,7 +40,7 @@ function submitPostReq () {
     fetch(endpoint, reqObj)
     .then(rs =>{return rs.json()})
     .then(response =>{
-        console.log("Response:" + response);
+        console.log("Response:", response);
         
          alert("POST REQUESTED");
 
