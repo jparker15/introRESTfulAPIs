@@ -26,6 +26,12 @@ const express = require("express"),
 
     });
 
+    router.get("/post", async (req,res) => {
+        
+        res.render("postGPU");
+
+    });
+
     router.delete("/delete/:id",findID, async (req,res) =>{
         try {
             await GPU.findByIdAndDelete(req.params.id);
@@ -49,11 +55,7 @@ const express = require("express"),
         
     });
 
-    router.get("/post", async (req,res) => {
-        
-        res.render("postGPU");
-
-    });
+  
 
     router.patch("/update/:id",findID, async (res,req) =>{
 
