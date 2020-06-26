@@ -52,15 +52,27 @@ function submitEditReq () { //id of mongoDB object
           
         form = this.parentElement;
 
-        //console.log(form);
+        console.log(form);
 
         let reqBody = {};
+
+        let validationErr = [];
 
         for (const iterator of form) {
 
             let inputValue = iterator.value.trim();
 
            // console.log(iterator,inputValue);
+
+           if(iterator.validationMessage != "" ){
+            validationErr.push(`${iterator.name}:${iterator.validationMessage}`)
+            }
+        
+            if(inputValue != ""){
+
+                reqBody[iterator.name] = inputValue;
+            }
+
 
             if(iterator.name === "release" && inputValue < new Date().getFullYear() - 100 || inputValue > new Date().getFullYear() + 2)   {
                 
@@ -69,16 +81,22 @@ function submitEditReq () { //id of mongoDB object
 
             }
 
-            if(inputValue != ""){
-
-                reqBody[iterator.name] = inputValue;
-            }
-
+            
+        }
+            //test if link.value contains wiki anywhere in URL
+        if(!(new RegExp(/wiki/g).test(form.link))){
+            validationErr.push("WIKI Link Must include wiki")
         }
 
+        if(validationErr.length > 0){
+            const message = `Error/s :\n\n${validationErr.join("\n")}`;
+
+            return alert(message);
+        }
+            
         reqObj ={
         
-            headers: {
+            headers: { //allow access at all origins 
             "Access-Control-Allow-Origin": "*",
     
             Accept: "application/json",
@@ -105,8 +123,8 @@ function submitEditReq () { //id of mongoDB object
 
             }
         })
-        .then(response => {
-            console.log("Response:",response);
+        .then(res => {
+            console.log("Response:",res);
 
             location.reload()
         })
