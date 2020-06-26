@@ -82,17 +82,6 @@ const Movie = new mongoose.Schema({
     release: {
         required: true,
         type: Number,
-        validate: (value) =>{
-           
-            const currentYear = new Date().getFullYear(),
-             validYear = validator.isFloat(value,{min:currentYear-100,max:currentYear+2})
-            
-            if(!validYear){
-                throw new Error ("Release year was invalid")
-            }
-                
-            
-        }
 
     },
 
