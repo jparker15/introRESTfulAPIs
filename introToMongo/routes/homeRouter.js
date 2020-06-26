@@ -15,12 +15,18 @@
 
                 //location.origin/?msg="message"&title="new title"
 
-                    //deconstructed object
+                    //destructured  object
+
+                      // req.query = {title: "", msg: ""}
+                        //object destructured 
+                    // const{msg,title} = req.query || mgs = req.query.msg ; title= req.query.title
 
                     //expected query in route
             const {msg,title} = req.query;
 
-            console.log(msg,title);
+            console.log(msg,title); 
+
+          
 
 
             res.render("test",{
@@ -39,11 +45,12 @@
         // })
 
         router.get("/mrental", async (req,res) =>{
-            const allMovies = await Movie.find({}),
+                                            //"nested object": {mongodb query selector:}
+            const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
 
                 clientMsg = `Number of Movies:` + allMovies.length; 
 
-            res.render("home", {all_movies: allMovies, message: clientMsg} )
+            res.render("home", {all_movies: allMovies, message: clientMsg})
         });
 
 
