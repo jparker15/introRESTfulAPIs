@@ -2,21 +2,29 @@ html
     title Post New GPU
     
     script
-        include ../static/postGPU.js
+        include ../static/post-page.js
 
     style
-        include ../static/style.css
+        include ../static/post-page.css
 
     body
         form#postForm
+            label Brand Name:
             input(placeholder="Enter Brand i.e. AMD, NVIDIA ", name="brand")
+            label Prefix:
             input(placeholder="Enter Prefix i.e. RX, GTX ", name="prefix")
+            label Generation Indicator:
             input(placeholder="Enter Generation Indicator i.e. 4XX series, 10XX series", name="generation",type="number")
+            label Performance Tier:
             input(placeholder="Enter Performance Tier i.e. RX X80, GTX XX80 ", name="perfTier")
+            label Varient/Suffix:
             input(placeholder="Enter Varient or Suffix i.e. x, Ti, Super ", name="suffix")
+            label Code Name/Architecture:
             input(placeholder="Enter Code Name or Architecture i.e. Polaris, Pascal", name="codeName")
+            label MSRP:
             input(placeholder="Manufacturer Suggested Retail Price", name="msrp",type="number")
-            input(placeholder="image url", name="img",type="url")
+            label IMG URL:
+            input(placeholder="Image URL", name="img",type="url")
         
         button#submitBtn Submit a New GPU
         button#homeBtn Return to Home Page
