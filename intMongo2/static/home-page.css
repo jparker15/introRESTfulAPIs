@@ -1,0 +1,55 @@
+body {
+    background-color:black;
+    color:white;
+    text-align: center;
+    justify-content: center;
+    background-image: url("bgimg.jpg");
+}
+
+.updateForm {
+
+    margin-left:25%;
+    margin-right:25%;
+    margin-top:2.5%;
+    background-color:#333;
+    display:none;
+    flex-direction: column;
+
+}
+
+input {
+    text-align: center;
+    color:lightpink;
+    background-color:#222;
+    border: dotted;
+    font-size:large;
+
+    margin-bottom:1%;
+    margin-top:1%;
+    margin-left:5%;
+    margin-right:5%;
+}
+.allGPUS{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.allGPUS div{
+
+    width: 50%;
+    margin: 0 auto;
+    border-style:solid;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    
+
+}
+.GPU div {
+    text-align: center;
+}
+.GPU img {
+    width: 50%;
+}
+.GPU button {
+    text-align: center;
+   
+}
