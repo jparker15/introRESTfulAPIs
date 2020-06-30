@@ -13,99 +13,43 @@ const express = require("express"),
     // });
 
     router.get("/",async (req,res) =>{
+
+       const allGPUs = await GPU.find({});
        
+       res.render("home",{
+          
+       })
+
+    });
+
+    router.get("/database",async (req,res)=>{
+
         const allGPUs = await GPU.find({}),
 
-              clientMsg = "Number of GPUs: " + allGPUs.length;
+        clientMsg = "Number of GPUs: " + allGPUs.length;
 
-        res.render("home", {
+        res.render("database", {
+
             message:clientMsg,
             entries:allGPUs
 
         })
 
-    });
+    })
 
-    router.get("/post", async (req,res) => {
+    router.get("/postGPU", async (req,res) => {
         
         res.render("postGPU");
 
     });
 
-    router.delete("/delete/:id",findID, async (req,res) =>{
-        try {
-            await GPU.findByIdAndDelete(req.params.id);
-
-            res.status(200).json({
-                status:200,
-                deleted: req.foundID
-            })
-            
-        }
-        catch(err){
-            console.log("error in homeRouter"+err.message);
-            
-            res.status(500).json({
-                status:500,
-                message: "an error occured during DELETE request",
-                error: err.message
-            });
-        }
-        console.log(req.body);
-        
-    });
+   
 
   
 
-    router.patch("/update/:id",findID, async (res,req) =>{
-
-        try {
-            await GPU.findByIdAndUpdate(req.params.id);
-
-            res.status(200).json({
-                status:200,
-                updated: req.foundID
-            })
-        }
-
-        catch (err) {
-
-            res.status(500).json({
-                status:500,
-                message:"an error occured during PATCH request",
-                error: err.message
-            })
-
-        }
-
-    })
     
 
-    router.post("/post", async (req,res) => {
-
-        try{
-            const newGPU = await GPU.create(req.body);
-            
-            res.status(201).json({
-                status:201,
-                new_gpu: newGPU,
-                message: "new GPU added to database"
-            });
-        }
-        catch (err) {
-
-                console.log(err.message);
-                
-            res.status(500).json({
-                status:500,
-                message:"an error has occured during POST request",
-                error:err.message
-            })
-        }
-        console.log(req.body);
-        
-
-    });
+    
 
    
 module.exports = router;
