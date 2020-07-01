@@ -1,0 +1,37 @@
+html
+    title Graphic Cards
+
+    style
+        include ../static/db-page.css
+
+    script
+        include ../static/db-page.js
+
+    body
+        h1=message
+
+        button#postRoute Post A GPU
+        button#homeRoute Return to Home Page
+
+        .allGPUS
+            each card in entries
+                .GPU(id=card._id)
+                    h1="Brand: " + card.brand
+                    h2="Model Scheme: " + card.prefix + card.generation + card.perfTier + card.suffix
+                    h2="Architecture/Code Name: "+card.codeName
+                    h1="MSRP:$ "+card.msrp
+                    img(src=card.img,alt=`${card.brand}${card.generation}${card.name} IMG`)
+                    button.deleteGPU Delete GPU
+                    button.editGPU Edit GPU 
+                    .updateForm
+                        form
+                            input(placeholder="Enter Brand i.e. AMD, NVIDIA ", name="brand")
+                            input(placeholder="Enter Prefix i.e. RX, GTX ", name="prefix")
+                            input(placeholder="Enter Generation Indicator i.e. 4XX series, 10XX series", name="generation",type="number")
+                            input(placeholder="Enter Performance Tier i.e. RX X80, GTX XX80 ", name="perfTier")
+                            input(placeholder="Enter Varient or Suffix i.e. x, Ti, Super ", name="suffix")
+                            input(placeholder="Enter Code Name or Architecture i.e. Polaris, Pascal", name="codeName")
+                            input(placeholder="Manufacturer Suggested Retail Price", name="msrp",type="number")
+                            input(placeholder="image url", name="img",type="url")
+                            button(type="button").submitEdit Submit GPU Edits
+                            button(type="button").canelEdit Cancel .editForm
