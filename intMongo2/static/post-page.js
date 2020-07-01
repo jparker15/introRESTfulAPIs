@@ -2,13 +2,21 @@ window.onload = () => {
     
     submitBtn.onclick = submitPostReq;
 
-    homeBtn.onclick = returnHomePage;
+    homeBtn.onclick = homePageRoute;
+
+    dbBtn.onclick = dBPageRoute;
 
 }
 
-function returnHomePage(){
+function homePageRoute(){
 
     location = location.origin;
+
+}
+
+function dBPageRoute(){
+
+    location = `${location.origin}/database`;
 
 }
 
@@ -35,14 +43,19 @@ function submitPostReq () {
 
     };
 
-    const endpoint = `${location.origin}/post`;
+    const endpoint = `${location.origin}/admin/post`;
 
     fetch(endpoint, reqObj)
     .then(rs =>{return rs.json()})
     .then(response =>{
         console.log("Response:", response);
         
-         alert("POST REQUESTED");
+         if ( response.status != 201){
+             alert(`${response.error}`)
+         }
+         else {
+             alert(`${response.message}`)
+         }
 
         // location = `${location.origin}`;
     })
