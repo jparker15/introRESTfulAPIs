@@ -37,7 +37,7 @@ const express = require("express"),
 
     })
 
-    router.get("/postGPU", async (req,res) => {
+    router.get("/postgpu", async (req,res) => {
         
         res.render("postGPU");
 
