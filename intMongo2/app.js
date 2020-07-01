@@ -8,6 +8,8 @@ const express = require("express"),
     
     home = require("./routes/homeRouter"),
 
+    xhrRoute = require("./routes/xhrRouter"),
+
     connectionURI = process.env.MONGO;
 
     const port = process.env.PORT || 5404;
@@ -24,6 +26,8 @@ const express = require("express"),
     app.use(express.static("./static"));
 
     app.use("/", home);
+
+    app.use("/admin", xhrRoute);
     
     newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
