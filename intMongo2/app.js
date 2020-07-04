@@ -10,6 +10,8 @@ const express = require("express"),
 
     xhrRoute = require("./routes/xhrRouter"),
 
+    searchRoute = require("./routes/searchRouter"),
+
     connectionURI = process.env.MONGO;
 
     const port = process.env.PORT || 5404;
@@ -28,6 +30,8 @@ const express = require("express"),
     app.use("/", home);
 
     app.use("/admin", xhrRoute);
+
+    app.use("/search", searchRoute);
     
     newObj = {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},
 
