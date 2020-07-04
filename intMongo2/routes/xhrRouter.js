@@ -1,8 +1,7 @@
 const express = require("express"),
-      router = express(),
+      router = express.Router(),
       GPU = require("../models/GPU");
-
-
+    
     router.delete("/delete/:id",findID, async (req,res) =>{
         try {
             await GPU.findByIdAndDelete(req.params.id);
