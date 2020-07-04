@@ -1,15 +1,17 @@
-html
-    title Post New GPU
-    
-    script
-        include ../static/post-page.js
+include ./mixins/naviBar.pug
 
-    style
-        include ../static/post-page.css
+html
+    head
+        title Post New GPU
+        
+        script
+            include ../static/post-page.js
+
+        style
+            include ../static/post-page.css
 
     body
-        button#homeBtn Return to Home Page
-        button#dbBtn Go to Database Page
+        +navi-bar
 
         form#postForm
             label Brand Name:
