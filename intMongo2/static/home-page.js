@@ -1,9 +1,17 @@
 
 window.onload = () =>{
     
-    postRoute.onclick = postPage;
+    // postRoute.onclick = postPage;
 
-    dbRoute.onclick = dbPage;
+    // dbRoute.onclick = dbPage;
+
+    // searchBar.input = searchFunc;
+    
+}
+
+function searchFunc () {
+    console.log(this.value);
+    
 }
 
 
