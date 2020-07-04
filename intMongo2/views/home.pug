@@ -1,18 +1,28 @@
+include ./mixins/naviBar.pug
+    
 html
-    title Graphic Cards DB
+    head
 
-    style
-        include ../static/home-page.css
+        title Graphic Cards DB
 
-    script
-        include ../static/home-page.js
+        style
+            include ../static/home-page.css
+
+        script
+            include ../static/home-page.js
+            include ./mixins/navi-bar-script.js
 
     body
+        
+        +navi-bar
+
         header 
             h1 Graphics Processing Unit Database
-            h5 sure do love looking at GPUs though 
-    
-        button#postRoute Post A GPU
-        button#dbRoute GPU Database
+            h5 Make a search bar function lmao
+                //-access to naviBar.pug but not an instance
+        
+
+        //- button#postRoute Post A GPU
+        //- button#dbRoute GPU Database
 
 
