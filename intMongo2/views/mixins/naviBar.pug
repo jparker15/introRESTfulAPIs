@@ -1,0 +1,12 @@
+script
+    include ./navi-bar-script.js
+
+mixin navi-bar(url)
+    .naviBar
+        a(href="http://localhost:5000") Home
+        a(href="#about") About
+        a(href="http://localhost:5000/postgpu") Post a GPU
+        a(href="http://localhost:5000/database") View Database
+        .search-container
+        input#searchBar(type="text",placeholder="Search..")
+        button(placeholder="Search..") Submit
