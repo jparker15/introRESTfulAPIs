@@ -1,17 +1,19 @@
+include ./mixins/naviBar.pug
+
 html
-    title Graphic Cards
+    head
+        title Graphic Cards
 
-    style
-        include ../static/db-page.css
+        style
+            include ../static/db-page.css
 
-    script
-        include ../static/db-page.js
+        script
+            include ../static/db-page.js
 
     body
         h1=message
 
-        button#postRoute Post A GPU
-        button#homeRoute Return to Home Page
+        +navi-bar
 
         .allGPUS
             each card in entries
