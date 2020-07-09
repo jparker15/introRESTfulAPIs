@@ -16,7 +16,7 @@ body {
 
 }
 
-input {
+#postForm input {
     text-align: center;
     color:lightpink;
     background-color:#222;
@@ -27,4 +27,32 @@ input {
     margin-top:1%;
     margin-left:5%;
     margin-right:5%;
+}
+.naviBar {
+    overflow: hidden;
+    background-color: rgba(255, 192, 203, 0.438);
+    text-align: center;
+    max-width:85%;
+    margin: 0 auto;
+}
+.naviBar a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 7px 8px;
+    text-decoration: pink;
+}
+.naviBar a:hover {
+    background-color: lightpink;
+    color: white;
+}
+
+.naviBar .search-container input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
 }

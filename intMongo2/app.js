@@ -8,7 +8,7 @@ const express = require("express"),
     
     home = require("./routes/homeRouter"),
 
-    xhrRoute = require("./routes/xhrRouter"),
+    xhrRoute = require("./routes/gpuRouter"),
 
     searchRoute = require("./routes/searchRouter"),
 
