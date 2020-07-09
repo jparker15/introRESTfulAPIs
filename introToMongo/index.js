@@ -18,6 +18,8 @@ const express = require("express"),
 
     const movieRouter = require("./routes/movieRouter");
 
+    const userRouter = require("./routes/userRouter");
+
     // some midware needs to go before others
     server.use(express.json());
 
@@ -34,11 +36,11 @@ const express = require("express"),
 
     server.use("/movie", movieRouter);
 
-   mongoose.connect(connectionURI,newObj ,() =>{
+    server.use("/user", userRouter);
 
-  
+    mongoose.connect(connectionURI,newObj ,() =>{
+
     console.log("The server is connected to the database");
-    
 
    });
    // event listener for error on connection
