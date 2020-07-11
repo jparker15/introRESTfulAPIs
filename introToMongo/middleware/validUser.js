@@ -20,7 +20,7 @@ module.exports = async (req,res,next) =>{
     if (emailExist) {
         failedValues.push({
             key: "email",
-            message: "Email "
+            message: "Email Already In Use"
         })
     }
 
