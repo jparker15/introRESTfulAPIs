@@ -14,7 +14,7 @@ const User = new mongoose.Schema({
         type: String,
         required: true,
         minlength:7,
-        maxlength:25,
+        maxlength:100,
     },
 
     adminProp: {
