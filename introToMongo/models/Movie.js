@@ -126,7 +126,11 @@ const Movie = new mongoose.Schema({
         default: {
                 //type Number is added for validation 
             available:1,
-            rented:0
+            rented: {
+                type: [mongoose.Schema.Types.ObjectId],
+                ref: "users",
+                default:[]
+            }
 
         }
     }
