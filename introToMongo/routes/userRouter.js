@@ -3,9 +3,16 @@ const router = require("express").Router();
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const validUser = require("../middleware/validUser");
-const authUser = require("../middleware/authUser");
 const secret = process.env.JWT_SECRET;
+
+const validUser = require("../middleware/validUser");
+const loginUser = require("../middleware/loginUser");
+const userAuth = require("../middleware/userAuth");
+
+
+router.get("/testAuth",userAuth, (req,res) =>{
+    res.send("succesfuly logged into thwe webs")
+});
 
 
 //POST route for Users
@@ -26,7 +33,7 @@ router.post(
 
     const hashedPass = await bcrypt.hash( req.body.password, salt);
     console.log(salt, bcrypt.getRounds(hashedPass));
-    req.body.password = hashedPass
+    req.body.password = hashedPass;
 
         try {
 
@@ -43,7 +50,7 @@ router.post(
                  error:error.message || error
              })
          }
-}) 
+});
 
 //PATCH (login) route for Users
 // localhost:3015/user
@@ -53,15 +60,18 @@ router.post(
 
 router.patch(
     "/",
-    authUser,
+    loginUser,
     async(req,res) =>{
 
-        const token = jwt.sign({id: req.id},secret);
+        req.id = undefined;
 
-        res.json(token)
+        const token = jwt.sign({id: req.id},secret, {expiresIn:60});
+
+        // console.log(req.id,secret,token);
+
+        res.json({token});
     
-    }    
-)
+});
 
 
 
