@@ -43,7 +43,7 @@ module.exports = async (req,res,next) => {
 
         req.id = user._id;
 
-        next() //if code execution reaches herer, it is assumed the user has successfully logged in
+        next() //if code execution reaches here, it is assumed the user has successfully logged in
 
     } catch (error) {
         json.status(500).json({
