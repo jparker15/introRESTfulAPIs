@@ -6,7 +6,7 @@
         //model for Movie requirement
     Movie = require("../models/Movie"),
 
-    adminAuthrzr = require("../middleware/adminAuthrzr")
+    adminAuth = require("../middleware/adminAuth")
 
 
         //pug 
@@ -64,7 +64,7 @@
         //     res.render("updateMovie")
         // });
 
-        router.get("/mrental/admin/:key",adminAuthrzr,(req,res) =>{
+        router.get("/mrental/admin/:key",adminAuth,(req,res) =>{
 
             res.render("admin-movie")
 
