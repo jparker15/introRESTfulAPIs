@@ -6,6 +6,18 @@ const express = require("express"),
 
 
         const findMovie = require("../middleware/findMovie");
+        const adminAuth = require("../middleware/adminAuth");
+
+        router.get("/adminTest",adminAuth, async(req,res)=>{
+            try {
+                res.json({message:"you are an admin!", admin_info: req.admin})
+                
+            } catch (err) {
+                const errMsg = err.message || err
+                console.error(`Error in Movie Router Test, \n Error: ${errMsg}`);
+                res.status(500).json({ error: errMsg})
+            }
+        });
         
         
            
@@ -122,7 +134,7 @@ router.get("/:movieID", findMovie, (req,res) => {
 
     //code is async by default
     // declaring async allows the use of synchronus i.e await specifies a line as synchornus
-router.delete("/delete/:movieID", findMovie, async (req,res) => {
+router.delete("/delete/:movieID", findMovie, adminAuth, async (req,res) => {
 
     console.log(req.params);
     
