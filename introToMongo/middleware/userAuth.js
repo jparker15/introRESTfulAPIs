@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req,res,next) => {
+module.exports = async (req,res,next, adminLvl) => {
             //destructuring alias
     const {JWT_SECRET: jwtKey , HEAD_AUTH_KEY:headerKey} = process.env;
 
@@ -15,6 +15,12 @@ module.exports = (req,res,next) => {
         // console.log(decodedData);
         if(decodedData.id === undefined){
             throw new Error ("ID was not defined in the payload");
+        }
+
+        const user = await findOne({_id:decodedData.id});
+
+        if (user === null) {
+            throw new Error("user id in payload wa")
         }
 
         req.userID = decodedData.id;
