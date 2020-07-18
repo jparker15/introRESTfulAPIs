@@ -8,10 +8,15 @@ const secret = process.env.JWT_SECRET;
 const validUser = require("../middleware/validUser");
 const loginUser = require("../middleware/loginUser");
 const userAuth = require("../middleware/userAuth");
+const adminAuth = require("../middleware/adminAuth");
 
 
 router.get("/testAuth",userAuth, (req,res) =>{
     res.send("succesfuly logged into thwe webs")
+});
+
+router.get("/testAdmin",adminAuth,(req,res) =>{
+    res.send("admin only club access granted")
 });
 
 
@@ -63,7 +68,7 @@ router.patch(
     loginUser,
     async(req,res) =>{
 
-        req.id = undefined;
+        // req.id = undefined; test
 
         const token = jwt.sign({id: req.id},secret, {expiresIn:60});
 
