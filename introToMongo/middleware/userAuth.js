@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = async (req,res,next, adminLvl) => {
+const User = require("../models/User");
+
+module.exports = async (req,res,next) => {
             //destructuring alias
     const {JWT_SECRET: jwtKey , HEAD_AUTH_KEY:headerKey} = process.env;
 
@@ -12,18 +14,27 @@ module.exports = async (req,res,next, adminLvl) => {
     try {
         
         const decodedData = jwt.verify(userToken,jwtKey);
-        // console.log(decodedData);
-        if(decodedData.id === undefined){
-            throw new Error ("ID was not defined in the payload");
+        // console.log(decodedData); //check length when finding doc by id MongoDB id are 24 characters
+        if(decodedData.id === undefined && decodedData.id.length != 24){
+            throw new Error ("ID was not defined in the payload or length was invalid");
         }
 
-        const user = await findOne({_id:decodedData.id});
+        const query = {_id:decodedData.id};
 
-        if (user === null) {
-            throw new Error("user id in payload wa")
+        //Optional. Specifies the fields to return using projection operators. 
+        // field1: <boolean> 1 = true 0 = false
+        const projection = {password:0,adminProp:0};
+        ////Omit this parameter to return all fields in the matching document.
+
+        const user = await User.findOne(query,projection);
+
+        if (user === null) {// if token is still valid but id is no longer in database
+            throw new Error("user id no longer valid")
         }
 
-        req.userID = decodedData.id;
+        console.log(user);
+
+        req.user = user;
 
         next()
         
