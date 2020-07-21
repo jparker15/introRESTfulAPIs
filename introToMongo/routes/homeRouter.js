@@ -9,7 +9,12 @@
     adminAuth = require("../middleware/adminAuth")
 
 
-        //pug 
+
+        //default GET route
+        //localhost:3015/
+        //@desc post/ home page 
+        //@path (server path)/
+        //@access public
         router.get("/", (req,res) =>{
             //expected query properties: "msg" and "title"
 
@@ -44,6 +49,12 @@
         //     res.send("yah")
         // })
 
+        //default GET route
+        //localhost:3015/mrental
+        //@desc post/ movie database page
+        //@path (server path)/mrental
+        //@access public
+
         router.get("/mrental", async (req,res) =>{
                                             //"nested object": {mongodb query selector:}
             const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
@@ -64,7 +75,14 @@
         //     res.render("updateMovie")
         // });
 
-        router.get("/mrental/admin/:key",adminAuth,(req,res) =>{
+            //default GET route
+        //localhost:3015/mrental/admin/:key
+        //@desc post/ movie database page
+        //@path (server path)/mrental/admin/:key
+        //@access admin
+
+
+        router.get("/mrental/admin/",adminAuth,(req,res) =>{
 
             res.render("admin-movie")
 
