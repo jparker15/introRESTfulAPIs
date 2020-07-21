@@ -10,15 +10,9 @@ const loginUser = require("../middleware/loginUser");
 const userAuth = require("../middleware/userAuth");
 const adminAuth = require("../middleware/adminAuth");
 
+// movie renting route
 
-router.get("/testAuth",userAuth, (req,res) =>{
-    res.send("succesfuly logged into thwe webs")
-});
-
-router.get("/testAdmin",adminAuth,(req,res) =>{
-    res.send("admin only club access granted")
-});
-
+// movie return route
 
 //POST route for Users
 //localhost:3015/user/
@@ -70,7 +64,7 @@ router.patch(
 
         // req.id = undefined; test
 
-        const token = jwt.sign({id: req.id},secret, {expiresIn:60});
+        const token = jwt.sign({id: req.id},secret, {expiresIn:"1hr"});
 
         // console.log(req.id,secret,token);
 
@@ -78,8 +72,14 @@ router.patch(
     
 });
 
+// Testing Routes
 
+// router.get("/testAuth",userAuth, (req,res) =>{
+//     res.send("succesfuly logged into thwe webs")
+// });
 
-
+// router.get("/testAdmin",adminAuth,(req,res) =>{
+//     res.send("admin access granted")
+// });
 
 module.exports = router;
