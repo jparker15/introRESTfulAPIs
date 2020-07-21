@@ -3,8 +3,6 @@ const express = require("express"),
     router = express.Router(),
         //MongoDB Schema
         Movie = require("../models/Movie");
-
-
         const findMovie = require("../middleware/findMovie");
         const adminAuth = require("../middleware/adminAuth");
 
@@ -18,9 +16,13 @@ const express = require("express"),
                 res.status(500).json({ error: errMsg})
             }
         });
-        
-        
-           
+
+        //routes to make
+
+        //add/delete movie inventory 
+
+        //TODO make movie route admin/user only include midwares
+    
 
 //           //route handler 
 //  router.get("/", (req,res) => {
@@ -38,7 +40,13 @@ const express = require("express"),
 
 // });
 
-    // request all movies
+
+        //default GET route
+        //localhost:3015/movie/all
+        //@desc sends all movies as a json to DOM 
+        //@path (server path)/movie/all
+        //@access public
+
     router.get("/all", async (req,res) => {
 
         try{            
@@ -86,7 +94,13 @@ const express = require("express"),
 
     //req.params.reqparms
     // request movie by DB ID 
-router.get("/:movieID", findMovie, (req,res) => {
+
+    //find a movie by id 
+    //localhost:3015/movie/getmovie/:movieID
+    //@desc sends one movie found by mongodb id as a json to DOM 
+    //@path (server path)/movie/getmovie/:movieID
+    //@access public
+router.get("/getmovie/:movieID", findMovie, (req,res) => {
    try{ 
         res.status(200).json({
         status: 200,
@@ -214,6 +228,38 @@ router.patch("/patch/:movieID", findMovie, async (req,res) =>{
 //             });
 //         }
 // });
+
+//patch all movies to update inventory to match the model
+
+router.patch(
+    "/mpatch1",
+    adminAuth,
+    async (req,res) =>{
+
+        try {
+           const report = await Movie.updateMany(
+               //empty obj as query means everything in that collection
+                {},
+                {
+                    inventory: {
+                        available: 1,
+                        rented:[]
+                    }
+              }
+            )
+
+            res.json({
+                allDoc: await Movie.find({}),
+                report: report,
+                message: "patch success"
+            })
+           
+        } catch (error) {
+            res.status(500).json({err: error.message || error})
+        }
+
+    }
+)
 
 router.post("/post", async (req,res) =>{
                         //object constructor
