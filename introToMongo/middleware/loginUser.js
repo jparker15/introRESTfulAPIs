@@ -46,7 +46,7 @@ module.exports = async (req,res,next) => {
         next() //if code execution reaches here, it is assumed the user has successfully logged in
 
     } catch (error) {
-        json.status(500).json({
+        res.status(500).json({
             errorAt: error.stack,
             message: error.message || error
         })
