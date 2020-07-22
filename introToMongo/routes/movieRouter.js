@@ -5,6 +5,8 @@ const express = require("express"),
         Movie = require("../models/Movie");
         const findMovie = require("../middleware/findMovie");
         const adminAuth = require("../middleware/adminAuth");
+        const newError = require("../utils/newError");
+
 
         router.get("/adminTest",adminAuth, async(req,res)=>{
             try {
@@ -19,7 +21,44 @@ const express = require("express"),
 
         //routes to make
 
-        //add/delete movie inventory 
+        //add/delete movie inventory
+        //localhost:3015/movie/all
+        //@desc sends all movies as a json to DOM 
+        //@path (server path)/movie/all
+        //@access public
+        
+
+        router.patch(
+            "/addinv",
+            adminAuth,
+            async (req,res) =>{
+
+                try {
+                    // if(req.admin.adminProp.adminLvl <= 1) throw newError("not authorized",401);
+
+                    //TODO
+                    //validate "movieId"(check length) and "inc"(check admin priv. admin lvl 1 = no privilage, lvl 2 = add 10 of inventory, lvl 3 = add 100 of inventory ) in req.body, confirm their types
+                    
+                    const updatedMovie = await Movie.findByIdAndUpdate(
+                        req.body.movieId,
+                        {$inc: {"inventory.available": req.body.inc}},
+                        {new:1}
+                        )
+                    res.json({"movie":updatedMovie})
+
+                } catch (error) {
+                    const errMsg = error.message || error;
+                    const errCode = error.code || 500;
+
+                    res.status(errCode).json({
+                        err: errMsg
+                    })
+                }
+                
+
+            }
+
+        )
 
         //TODO make movie route admin/user only include midwares
     
