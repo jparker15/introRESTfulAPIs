@@ -4,6 +4,11 @@ html
 
         body
             h1= message
-            h3 this issa static innerText value.
-            p.paragraphClass#paraID
+
+            form
+                label(for="email") Enter a User Email:
+                input(type="email", name="email")
+                label(for="password") Enter Password:
+                input(type="password")
+            
             
