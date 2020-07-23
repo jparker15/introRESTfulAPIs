@@ -6,7 +6,9 @@
         //model for Movie requirement
     Movie = require("../models/Movie"),
 
-    adminAuth = require("../middleware/adminAuth")
+    adminAuth = require("../middleware/adminAuth"),
+
+    userAuth = require("../middleware/userAuth");
 
 
 
@@ -36,9 +38,9 @@
 
             res.render("test",{
 
-                message:msg || "default msg",
+                message:msg || "Welcome to a home page mrental",
 
-                titleVar:title || "default title"
+                titleVar:title || "MRNTL"
             
             });
             
@@ -53,9 +55,9 @@
         //localhost:3015/mrental
         //@desc post/ movie database page
         //@path (server path)/mrental
-        //@access public
+        //@access users 
 
-        router.get("/mrental", async (req,res) =>{
+        router.get("/mrental",userAuth, async (req,res) =>{
                                             //"nested object": {mongodb query selector:}
             const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
 
@@ -76,10 +78,10 @@
         // });
 
             //default GET route
-        //localhost:3015/mrental/admin/:key
+        //localhost:3015/mrental/admin/
         //@desc post/ movie database page
-        //@path (server path)/mrental/admin/:key
-        //@access admin
+        //@path (server path)/mrental/admin/
+        //@access admin jwt
 
 
         router.get("/mrental/admin/",adminAuth,(req,res) =>{
@@ -90,16 +92,16 @@
 
         //html work in progress
 
-        router.get("/mrental/static", (req,res) => {
-            //cwd is directory of whole project 
+        // router.get("/mrental/static", (req,res) => {
+        //     //cwd is directory of whole project 
 
-            console.log("connecting maybe....");
+        //     console.log("connecting maybe....");
             
 
-            const fileLoc = process.cwd() + `\\public\\home-static\\homePage\\home.html`;
+        //     const fileLoc = process.cwd() + `\\public\\home-static\\homePage\\home.html`;
             
-            res.sendFile(fileLoc);
-        });
+        //     res.sendFile(fileLoc);
+        // });
 
 
 
