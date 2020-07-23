@@ -1,33 +1,36 @@
-const express = require("express"),
+        const express = require("express"),
     //an instance of express Router class
-    router = express.Router(),
+        router = express.Router(),
         //MongoDB Schema
         Movie = require("../models/Movie");
-        const findMovie = require("../middleware/findMovie");
-        const adminAuth = require("../middleware/adminAuth");
+
         const newError = require("../utils/newError");
 
+        const findMovie = require("../middleware/findMovie");
+        const adminAuth = require("../middleware/adminAuth");
+        const userAuth = require("../middleware/userAuth");
+        
 
-        router.get("/adminTest",adminAuth, async(req,res)=>{
-            try {
-                res.json({message:"you are an admin!", admin_info: req.admin})
+
+        // router.get("/adminTest",adminAuth, async(req,res)=>{
+        //     try {
+        //         res.json({message:"you are an admin!", admin_info: req.admin})
                 
-            } catch (err) {
-                const errMsg = err.message || err
-                console.error(`Error in Movie Router Test, \n Error: ${errMsg}`);
-                res.status(500).json({ error: errMsg})
-            }
-        });
+        //     } catch (err) {
+        //         const errMsg = err.message || err
+        //         console.error(`Error in Movie Router Test, \n Error: ${errMsg}`);
+        //         res.status(500).json({ error: errMsg})
+        //     }
+        // });
 
         //routes to make
 
         //add/delete movie inventory
-        //localhost:3015/movie/all
-        //@desc sends all movies as a json to DOM 
-        //@path (server path)/movie/all
-        //@access public
-        
 
+        //localhost:3015/movie/all
+        //@desc adds given inventory to selected movie  
+        //@path (server path)/movie/addinv
+        //@access admin
         router.patch(
             "/addinv",
             adminAuth,
@@ -46,12 +49,12 @@ const express = require("express"),
                         )
                     res.json({"movie":updatedMovie})
 
-                } catch (error) {
-                    const errMsg = error.message || error;
-                    const errCode = error.code || 500;
+                } catch (err) {
+                    const errMsg = err.message || err;
+                    const errCode = err.code || 500;
 
                     res.status(errCode).json({
-                        err: errMsg
+                        error: errMsg
                     })
                 }
                 
@@ -84,9 +87,12 @@ const express = require("express"),
         //localhost:3015/movie/all
         //@desc sends all movies as a json to DOM 
         //@path (server path)/movie/all
-        //@access public
+        //@access user
 
-    router.get("/all", async (req,res) => {
+    router.get(
+        "/all",
+        userAuth,
+        async (req,res) => {
 
         try{            
            const allMovies = await Movie.find();
@@ -113,12 +119,12 @@ const express = require("express"),
            res.status(200).json(Json)
         }
         catch (err) {
-            res.status(500).json({
-                status:500,
-                message: "error occured",
-                error: err.message,
-                full_report: err
-            });
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            res.status(errCode).json({
+                error: errMsg
+            })
         }
     });
 
@@ -139,7 +145,10 @@ const express = require("express"),
     //@desc sends one movie found by mongodb id as a json to DOM 
     //@path (server path)/movie/getmovie/:movieID
     //@access public
-router.get("/getmovie/:movieID", findMovie, (req,res) => {
+router.get(
+    "/getmovie/:movieID",
+    findMovie,
+    (req,res) => {
    try{ 
         res.status(200).json({
         status: 200,
@@ -148,14 +157,13 @@ router.get("/getmovie/:movieID", findMovie, (req,res) => {
         });
     }
     catch(err){
-        console.log(err.message);
-
-        res.status(500).json({
-            status:500,
-            message: "an error has occured",
-            error:err.message
-        });
         
+        const errMsg = err.message || err;
+        const errCode = err.code || 500;
+
+        res.status(errCode).json({
+            error: errMsg
+        })
     }
 });
 //my delete
@@ -187,7 +195,11 @@ router.get("/getmovie/:movieID", findMovie, (req,res) => {
 
     //code is async by default
     // declaring async allows the use of synchronus i.e await specifies a line as synchornus
-router.delete("/delete/:movieID", findMovie, adminAuth, async (req,res) => {
+router.delete(
+    "/delete/:movieID", 
+    findMovie, 
+    adminAuth, 
+    async (req,res) => {
 
     console.log(req.params);
     
@@ -209,15 +221,19 @@ router.delete("/delete/:movieID", findMovie, adminAuth, async (req,res) => {
     catch (err) {     //
         console.error(`Error in HomeRouter` + err.message);
         
-        res.status(500).json({
-            status:500,
-            message:err.message
-        });
+        const errMsg = err.message || err;
+        const errCode = err.code || err;
+
+        res.status(errCode).json({error:errMsg});
 
     }
 });
 
-router.patch("/patch/:movieID", findMovie, async (req,res) =>{
+router.patch(
+    "/patch/:movieID",
+    adminAuth,
+    findMovie,
+    async (req,res) =>{
     
     const id = req.params.movieID;
     // keeps track of how many times a document has been updated
@@ -242,10 +258,10 @@ router.patch("/patch/:movieID", findMovie, async (req,res) =>{
     }catch (err) {     //
         console.error(`Error in HomeRouter` + err.message);
         
-        res.status(500).json({
-            status:500,
-            message:err.message
-        })
+        const errMsg = err.message || err;
+        const errCode = err.code || err;
+
+        res.status(errCode).json({error:errMsg});
 
     }
 
@@ -293,14 +309,20 @@ router.patch(
                 message: "patch success"
             })
            
-        } catch (error) {
-            res.status(500).json({err: error.message || error})
+        } catch (err) {
+            const errMsg = err.message || err;
+            const errCode = err.code || 500;
+
+            res.status(errCode).json({error:errMsg});
         }
 
     }
 )
 
-router.post("/post", async (req,res) =>{
+router.post(
+    "/post",
+    adminAuth,
+    async (req,res) =>{
                         //object constructor
   
 
@@ -324,18 +346,13 @@ router.post("/post", async (req,res) =>{
 
         console.log(err.message);
 
-        res.status(500).json({
+        const errMsg = err.message || err;
+        const errCode = err.code || 500;
 
-            status: 500,
-            message: "an error has occured during POST request",
-            error: err.message
-    
-        });
+        res.status(errCode).json({error:errMsg});
         
 
     }
-
-     console.log(req.body);
 
     // res.send("loop prevention");
 
