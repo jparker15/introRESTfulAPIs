@@ -18,6 +18,12 @@ const newError = require("../utils/newError")
 
 // movie renting route
 
+//PATCH (login) route for Users
+// localhost:3015/user/rent
+//@desc user can rent movies by ID 
+//@path (server path)/user/rent 
+//@access user
+
 router.patch(
     "/rent/",
     userAuth,
@@ -92,6 +98,14 @@ router.patch(
 
 // movie return route
 
+router.patch(
+    "/return",
+    userAuth,
+    async (req,res) =>{
+        const movieId = req.body.movieId;
+    }
+)
+
 //POST route for Users
 //localhost:3015/user/
 //@desc post/make a new user and store in users collections
@@ -121,11 +135,12 @@ router.post(
                  document:newUser
              })
              
-         } catch (error) {
-             res.status(500).json({
-                 status:500,
-                 error:error.message || error
-             })
+         } catch (err) {
+             const errMsg = err.message || err;
+             const errCode = err.code || 500;
+
+             res.status(errCode).json({error:errMsg})
+
          }
 });
 
@@ -140,13 +155,23 @@ router.patch(
     loginUser,
     async(req,res) =>{
 
-        // req.id = undefined; test
+       try {
+            const token = jwt.sign({id: req.id},secret, {expiresIn:"1hr"});
 
-        const token = jwt.sign({id: req.id},secret, {expiresIn:"1hr"});
+            res.json({token});   
+       } catch (err) {
+           const errMsg = err.message || err;
+           const errCode = err.code || 500
 
+           res.status(errCode).json({
+               error: errMsg
+           })
+       }
+
+        
         // console.log(req.id,secret,token);
 
-        res.json({token});
+        
     
 });
 
