@@ -37,7 +37,7 @@ router.patch(
            console.log(`\nFound Movie: ${findMov}`);
 
            if(findMov === null){
-                console.log(`movie id error renting ${movieId}`); 
+                console.log(`movie id error renting: ${movieId}`); 
                 throw newError("movie was not found or unavailable",404);
             }
 
@@ -48,7 +48,7 @@ router.patch(
             if (req.user.rentedMovies.indexOf(movieId) != -1) {
 
                 console.log(`user tried to rent movie twice \n${movieId} \n user id:${req.user._id}`); 
-                throw newError("movie was not found or unavailable",409);
+                throw newError("multiple rental attempts",409);
             }
 
             //modify the user doc
@@ -78,17 +78,17 @@ router.patch(
             })
 
 
-        } catch (error) {
+        } catch (err) {
             
-            console.log(error.message, error.status);
+            // console.log(error.message, error.status);
            
-            const errMsg = error.message || error;
-            const errSts = error.status || error;
+            const errMsg = err.message || err;
+            const errStat = err.status || 500;
 
             console.log(`\nerror in movie renting:\n${errMsg}\n`);
 
-            res.status(errSts || 500).json({
-                err: errMsg
+            res.status(errStat).json({
+                error: errMsg
             })
             
         }
@@ -103,6 +103,51 @@ router.patch(
     userAuth,
     async (req,res) =>{
         const movieId = req.body.movieId;
+
+        try { //movies matches given movieId and user matches user id in rented array  
+            const movie = await Movie.findOneAndUpdate(
+                {_id:movieId},
+                {
+                    $inc:{"inventory.available":1},
+                    $unset:{"inventory.rented":req.user._id}
+                },
+                {new:1}
+            );
+
+            console.log(`\nFound Movie: ${movie}`);
+
+            if(movie === null){
+                console.log(`movie id error returning: ${movieId}`);
+                throw newError("movie was not found or invalid id", 404);
+            };
+
+            if(req.user.rentedMovies.indexOf(movieId) === -1){
+                console.log(`User returning multiple movies \n Movie:${movieId}\nUserId:${req.user._id}`);
+                throw newError("multiple return attempts", 409);
+            };
+
+            const newUser = await User.updateOne(
+                {_id:req.user._id},
+                {$unset:{rentedMovies:movieId}},
+                {new: 1}
+            );
+
+            res.json({
+                message:`returned`,
+                user: newUser,
+                returned_movie: movie
+            });
+            
+        } catch (err) {
+
+            console.log("log:",err.message,err.status)
+
+            const errMsg = err.message || err;
+            const errStat = err.status || 500;
+
+            res.status(errStat).json({error:errMsg});
+
+        }
     }
 )
 
@@ -137,9 +182,9 @@ router.post(
              
          } catch (err) {
              const errMsg = err.message || err;
-             const errCode = err.code || 500;
+             const errStat = err.status || 500;
 
-             res.status(errCode).json({error:errMsg})
+             res.status(errStat).json({error:errMsg})
 
          }
 });
@@ -161,9 +206,9 @@ router.patch(
             res.json({token});   
        } catch (err) {
            const errMsg = err.message || err;
-           const errCode = err.code || 500
+           const errStat = err.status || 500
 
-           res.status(errCode).json({
+           res.status(errStat).json({
                error: errMsg
            })
        }
