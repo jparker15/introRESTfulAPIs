@@ -9,7 +9,6 @@
         const findMovie = require("../middleware/findMovie");
         const adminAuth = require("../middleware/adminAuth");
         const userAuth = require("../middleware/userAuth");
-        
 
 
         // router.get("/adminTest",adminAuth, async(req,res)=>{
@@ -27,43 +26,98 @@
 
         //add/delete movie inventory
 
-        //localhost:3015/movie/all
+        //localhost:3015/movie/addinv
         //@desc adds given inventory to selected movie  
         //@path (server path)/movie/addinv
         //@access admin
+
         router.patch(
-            "/addinv",
+            "/updinv",
             adminAuth,
             async (req,res) =>{
-
+                
                 try {
-                    // if(req.admin.adminProp.adminLvl <= 1) throw newError("not authorized",401);
 
-                    //TODO
-                    //validate "movieId"(check length) and "inc"(check admin priv. admin lvl 1 = no privilage, lvl 2 = add 10 of inventory, lvl 3 = add 100 of inventory ) in req.body, confirm their types
-                    
                     const updatedMovie = await Movie.findByIdAndUpdate(
                         req.body.movieId,
-                        {$inc: {"inventory.available": req.body.inc}},
+                        {$inc:{"inventory.available":req.body.inc}},
                         {new:1}
-                        )
-                    res.json({"movie":updatedMovie})
+                    )
+                    res.json({movie:updatedMovie});
 
                 } catch (err) {
-                    const errMsg = err.message || err;
-                    const errCode = err.code || 500;
 
-                    res.status(errCode).json({
-                        error: errMsg
-                    })
+                    const errMsg = err.message||err;
+                    const errStat = err.status|| 500;
+
+                    res.status(errStat).json({error:errMsg});
                 }
-                
-
             }
-
         )
 
-        //TODO make movie route admin/user only include midwares
+
+        // //localhost:3015/movie/addinv
+        // //@desc adds given inventory to selected movie  
+        // //@path (server path)/movie/addinv
+        // //@access admin
+        // router.patch(
+        //     "/addinv",
+        //     adminAuth,
+        //     async (req,res) =>{
+
+        //         try {
+        //             // if(req.admin.adminProp.adminLvl <= 1) throw newError("not authorized",401);
+
+        //             //TODO
+        //             //validate "movieId"(check length) and "inc"(check admin priv. admin lvl 1 = no privilage, lvl 2 = add 10 of inventory, lvl 3 = add 100 of inventory ) in req.body, confirm their types
+                    
+        //             const updatedMovie = await Movie.findByIdAndUpdate(
+        //                 req.body.movieId,
+        //                 {$inc: {"inventory.available": req.body.inc}},
+        //                 {new:1}
+        //                 )
+        //             res.json({"movie":updatedMovie});
+
+        //         } catch (err) {
+        //             const errMsg = err.message || err;
+        //             const errStat = err.status || 500;
+
+        //             res.status(errStat).json({
+        //                 error: errMsg
+        //             })
+        //         }
+                
+
+        //     }
+
+        // )
+        
+        // //localhost:3015/movie/subinv
+        // //@desc subtracts given inventory to selected movie  
+        // //@path (server path)/movie/addinv
+        // //@access admin
+
+        // router.patch(
+        //     "/subinv",
+        //     adminAuth,
+        //     async (req,res) =>{
+        //         try{
+        //             const updatedMovie = await Movie.findByIdAndUpdate(
+        //                 req.body.movieId, //value of _id to query
+        //                 {$inc: {"inventory.available":req.body.dec}},// $inc updates avaiable by a negative number
+        //                 {new:1}
+        //             )
+        //             res.json({"movie":updatedMovie});
+        //         }
+        //         catch(err){
+        //             const errMsg = err.message || err;
+        //             const errStat = err.status || 500;
+
+        //             res.status(errStat).json({error:errMsg});
+        //         }
+        //     }
+        // )
+        
     
 
 //           //route handler 
@@ -120,9 +174,9 @@
         }
         catch (err) {
             const errMsg = err.message || err;
-            const errCode = err.code || 500;
+            const errStat = err.status || 500;
 
-            res.status(errCode).json({
+            res.status(errStat).json({
                 error: errMsg
             })
         }
@@ -159,9 +213,9 @@ router.get(
     catch(err){
         
         const errMsg = err.message || err;
-        const errCode = err.code || 500;
+        const errStat = err.status || 500;
 
-        res.status(errCode).json({
+        res.status(errStat).json({
             error: errMsg
         })
     }
@@ -222,9 +276,9 @@ router.delete(
         console.error(`Error in HomeRouter` + err.message);
         
         const errMsg = err.message || err;
-        const errCode = err.code || err;
+        const errStat = err.status || 500;
 
-        res.status(errCode).json({error:errMsg});
+        res.status(errStat).json({error:errMsg});
 
     }
 });
@@ -259,9 +313,9 @@ router.patch(
         console.error(`Error in HomeRouter` + err.message);
         
         const errMsg = err.message || err;
-        const errCode = err.code || err;
+        const errStat = err.status || 500;
 
-        res.status(errCode).json({error:errMsg});
+        res.status(errStat).json({error:errMsg});
 
     }
 
@@ -311,9 +365,9 @@ router.patch(
            
         } catch (err) {
             const errMsg = err.message || err;
-            const errCode = err.code || 500;
+            const errStat = err.status || 500;
 
-            res.status(errCode).json({error:errMsg});
+            res.status(errStat).json({error:errMsg});
         }
 
     }
@@ -347,9 +401,9 @@ router.post(
         console.log(err.message);
 
         const errMsg = err.message || err;
-        const errCode = err.code || 500;
+        const errStat = err.status || 500;
 
-        res.status(errCode).json({error:errMsg});
+        res.status(errStat).json({error:errMsg});
         
 
     }
