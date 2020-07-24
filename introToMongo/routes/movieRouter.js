@@ -35,22 +35,65 @@
             "/updinv",
             adminAuth,
             async (req,res) =>{
+
+                const {movieId, inc, isIncrease = true} = req.body; // const movieId = req.body.movieId 
+                     
+                const adminLvl = req.admin.adminLvl;
                 
                 try {
+                        // validating movie id 
+                    if(typeof movieId !== "string" || movieId.length !== 24) throw newError ("Movie ID Is Invalid",400);
 
-                    const updatedMovie = await Movie.findByIdAndUpdate(
-                        req.body.movieId,
-                        {$inc:{"inventory.available":req.body.inc}},
+                    if(typeof inc !== "number" || inc <= 0) throw newError("Increment Value Invalid", 400);
+
+                    let limit;
+
+                    switch (adminLvl) {
+                        case 1 :
+                            limit = 1
+                            break;
+                        case 2 :
+                            limit = 10
+                            break;
+                        case 3 :
+                            limit = 100
+                            break;
+                    }
+
+                    if (inc > limit) throw newError ((`Not Authorized to Increase by ${inc} for Admin Level ${adminLvl}`,401));
+                    // if (
+                    //     (adminLvl === 1 && inc > 1) 
+                    //     ||
+                    //     (adminLvl === 2 && inc > 10)
+                    //     ||
+                    //     (adminLvl == 3 && inc > 100)
+                        
+                    // ) throw newError (`Not Authorized to Increase by ${inc}`,401);
+
+                    const increment = isIncrease === true ? inc : -inc;
+        
+                    const found = await Movie.findById(movieId);
+                    
+                    if (found === null) throw newError ("Movie ID does not exist", 404);
+
+                    if (found.inventory.available + increment < 0) throw newError ("Inventory can not be below 0",400)
+
+                    const updatedMovie = await Movie.findOneAndUpdate(
+                        {_id:movieId},
+                        {$inc:{"inventory.available":increment}},
                         {new:1}
                     )
-                    res.json({movie:updatedMovie});
+
+                    res.json({message: "Inventory Has Been Updated",movie:updatedMovie});
 
                 } catch (err) {
+                                //setting default
+                    const {message:msg = err, code = 500} = err; 
 
-                    const errMsg = err.message||err;
-                    const errStat = err.status|| 500;
-
-                    res.status(errStat).json({error:errMsg});
+                    res.status(code).json({"error":msg});
+                    /* const errMsg = err.message||err;
+                    // const errStat = err.status|| 500;
+                    // res.status(errStat).json({error:errMsg});*/
                 }
             }
         )
