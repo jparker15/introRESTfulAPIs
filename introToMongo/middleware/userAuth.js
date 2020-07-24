@@ -33,7 +33,7 @@ module.exports = async (req,res,next) => {
         }
 
         console.log(user);
-
+            //user info passed to req obj
         req.user = user;
 
         next()
