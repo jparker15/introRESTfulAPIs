@@ -14,7 +14,59 @@ const loginUser = require("../middleware/loginUser");
 const userAuth = require("../middleware/userAuth");
 const adminAuth = require("../middleware/adminAuth");
 //utils
-const newError = require("../utils/newError")
+const newError = require("../utils/newError");
+//endware
+const sendErr = require("../endware/sendErr");
+
+router.patch(
+    "/rentreturn",
+    userAuth,
+    async (req,res)=>{
+        const {movieId, isRenting = true} = req.body.movieId;
+
+        const {user} = req.user._id;
+
+        try {
+            const movieQuery = isRenting ? {_id:movieId, "inventory.available":{$gte:1}} : {_id:movieId};
+
+            const userUpdate = isRenting ? { $addToSet:{ rentedMovies: movieId}} :  {$pull:{rentedMovies: movieId}};
+
+            const movieUpdate = isRenting ? {$addToSet: {"inventory.rented":user}, $inc: {"inventory.available":-1}} : {$pull :{"inventory.rented":user}, $inc:{"inventory.available":1}};
+
+            const movie = await Movie.findOne(movieQuery);
+
+            if(movie === null ){
+                console.log(`Movie ID error renting ${movieId}`);
+                throw newError ("Movie Not Found or Unavailable", 404);
+            }
+
+            //modify user doc 
+            const newUser = await User.findByIdAndUpdate(
+                user,
+                userUpdate,
+                {new:1}
+            )
+            // modify movie doc
+            const newMovie = await Movie.findByIdAndUpdate(
+                movieId,
+                movieUpdate,
+                {new:1}
+            )
+
+            res.json({
+                message:"Success",
+                user: newUser,
+                movie: newMovie
+            })
+
+
+
+            
+        } catch (err) {
+            sendErr(err)
+        }
+    }
+)
 
 // movie renting route
 
