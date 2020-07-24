@@ -102,14 +102,28 @@ router.patch(
     "/return",
     userAuth,
     async (req,res) =>{
-        const movieId = req.body.movieId;
+        const {movieId, isRenting = true} = req.body.movieId;
 
         try { //movies matches given movieId and user matches user id in rented array  
+            const movieQ = 
+                isRenting 
+                    ?{_id: movieId, "inventory.available"
+                    :  { $gte:1}} : {_id: movieId};
+            const userUp = 
+                isRenting 
+                    ? {$addToSet:{rentedMovies:movieId}}
+                    :  { $pull:{rentedMovies: movieId}};
+
+            const movieUp = 
+                isRenting 
+                ? {$addToSet:{ "inventory.rented":req.user._id}, $inc:{"inventory.available":- 1}}
+                :  {$pull:{"inventory.rented": req.user._id}, $inc:{"inventory.available": 1}};
+
             const movie = await Movie.findOneAndUpdate(
                 {_id:movieId},
                 {
                     $inc:{"inventory.available":1},
-                    $unset:{"inventory.rented":req.user._id}
+                    $pull:{"inventory.rented":req.user._id}
                 },
                 {new:1}
             );
@@ -128,7 +142,7 @@ router.patch(
 
             const newUser = await User.updateOne(
                 {_id:req.user._id},
-                {$unset:{rentedMovies:movieId}},
+                {$pull:{rentedMovies:movieId}},
                 {new: 1}
             );
 
