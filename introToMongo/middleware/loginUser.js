@@ -7,6 +7,7 @@ const failedLogin = (req,res) => {
 }
 
 module.exports = async (req,res,next) => {
+    console.log(req.body);
     //
     try {
         const email = req.body.email,
@@ -17,7 +18,7 @@ module.exports = async (req,res,next) => {
 
         if (!emailValid) {
             console.error(`\nLogin Failed: Email Not Valid`)
-            failedLogin()
+            failedLogin(req,res)
         }
             
            
@@ -26,7 +27,7 @@ module.exports = async (req,res,next) => {
         //findOne returns one document if query satisfied or returns null
         if (user === null ){
             console.error(`\nLogin Failed: Email Not in Use`)
-            failedLogin()
+            failedLogin(req,res)
         }
 
         const pass = req.body.password;
@@ -38,7 +39,7 @@ module.exports = async (req,res,next) => {
 
         if (!passTest){
             console.error(`\nLogin Failed: Password Invalid`)
-            failedLogin()
+            failedLogin(req,res)
         }
 
         req.id = user._id;
