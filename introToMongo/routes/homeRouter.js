@@ -10,46 +10,14 @@
 
     userAuth = require("../middleware/userAuth");
 
-
-
-        //default GET route
-        //localhost:3015/
-        //@desc post/ home page 
-        //@path (server path)/
-        //@access public
-        router.get("/", (req,res) =>{
-            //expected query properties: "msg" and "title"
-
-                //location.origin/?msg="message"&title="new title"
-
-                    //destructured  object
-
-                      // req.query = {title: "", msg: ""}
-                        //object destructured 
-                    // const{msg,title} = req.query || mgs = req.query.msg ; title= req.query.title
-
-                    //expected query in route
-            const {msg,title} = req.query;
-
-            console.log(msg,title); 
-
-          
-
-
-            res.render("test",{
-
-                message:msg || "Welcome to a home page mrental",
-
-                titleVar:title || "MRNTL"
-            
-            });
-            
-        });
-
         // router.get("/:request params/:reqParams",(req,res) =>{
         //     location = `${location.origin}/mrental`
         //     res.send("yah")
         // })
+
+        router.get("/login", (req,res) =>{
+            res.render("login");
+        })
 
         //default GET route
         //localhost:3015/mrental
@@ -57,7 +25,7 @@
         //@path (server path)/mrental
         //@access users 
 
-        router.get("/mrental",userAuth, async (req,res) =>{
+        router.get("/", async (req,res) =>{
                                             //"nested object": {mongodb query selector:}
             const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
 
