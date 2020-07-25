@@ -19,10 +19,10 @@ const newError = require("../utils/newError");
 const sendErr = require("../endware/sendErr");
 
 router.patch(
-    "/rentreturn",
+    "/rent_return",
     userAuth,
     async (req,res)=>{
-        const {movieId, isRenting = true} = req.body.movieId;
+        const {movieId, isRenting = true} = req.body;
 
         const {user} = req.user._id;
 
@@ -52,12 +52,23 @@ router.patch(
                 movieUpdate,
                 {new:1}
             )
+            //ToDo
+
+            //if the user is renting, make sure they dont already have that movie rented
+
+			//if the user is returning, make sure they are currently renting the movie
+
+           
+
+
 
             res.json({
                 message:"Success",
                 user: newUser,
                 movie: newMovie
             })
+
+
 
 
 
@@ -262,12 +273,12 @@ router.post(
 //@access public
 
 router.patch(
-    "/",
+    "/login",
     loginUser,
     async(req,res) =>{
 
        try {
-            const token = jwt.sign({id: req.id},secret, {expiresIn:"1hr"});
+            const token = jwt.sign({id: req.id},secret, {expiresIn:"12hr"});
 
             res.json({token});   
        } catch (err) {
