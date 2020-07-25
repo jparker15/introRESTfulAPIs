@@ -5,16 +5,39 @@ window.onload = () => {
         //div containing elements/inputs of each movie
     const displayDivs = document.getElementsByClassName("displayMovie");
 
-    for (const div of displayDivs){div.style.display = "flex";}
+    for (const div of displayDivs){div.style.display = "flex"};
         //hidden inputs for PATCH req div
     const editDivs = document.getElementsByClassName("editMovie");
 
-    for (const div of editDivs){div.style.display = "none";}
+    for (const div of editDivs){div.style.display = "none"};
         //button to submit edit inputs/fetch PATCH req
-    const editSubmit = document.getElementsByClassName("editMovieBtn")
+    const editSubmit = document.getElementsByClassName("editMovieBtn");
+
+    document.getElementById("loginBtn").onclick = loginUser;
+
+    document.getElementById("logoutBtn").onclick = logoutUser;
 
     allMovies.style.display = "flex";
     
+}
+
+function logoutUser (){
+    const token = localStorage.getItem("loginToken");
+    // console.log(token);
+
+    if (token !== null){
+        localStorage.removeItem("loginToken");
+        alert("You have logged out")
+    }
+    else{
+        alert("You are not logged in")
+    }
+}
+
+function loginUser () {
+    
+    location = location.origin+"/login"
+
 }
 
 function setEventListeners (){
