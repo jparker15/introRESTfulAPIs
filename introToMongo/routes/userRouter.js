@@ -24,14 +24,14 @@ router.patch(
     async (req,res)=>{
         const {movieId, isRenting = true} = req.body;
 
-        const {user} = req.user._id;
+        const user = req.user;
 
         try {
             const movieQuery = isRenting ? {_id:movieId, "inventory.available":{$gte:1}} : {_id:movieId};
 
             const userUpdate = isRenting ? { $addToSet:{ rentedMovies: movieId}} :  {$pull:{rentedMovies: movieId}};
 
-            const movieUpdate = isRenting ? {$addToSet: {"inventory.rented":user}, $inc: {"inventory.available":-1}} : {$pull :{"inventory.rented":user}, $inc:{"inventory.available":1}};
+            const movieUpdate = isRenting ? {$addToSet: {"inventory.rented":user._id}, $inc: {"inventory.available":-1}} : {$pull :{"inventory.rented":user._id}, $inc:{"inventory.available":1}};
 
             const movie = await Movie.findOne(movieQuery);
 
@@ -54,13 +54,18 @@ router.patch(
             )
             //ToDo
 
-            //if the user is renting, make sure they dont already have that movie rented
+            // if the user is renting, make sure they dont already have that movie rented
 
-			//if the user is returning, make sure they are currently renting the movie
+            if(isRenting && user.rentedMovies.indexOf(movieId)!== -1){
 
-           
-
-
+                throw newError ("User Already Renting Selection: Duap Rent", 409 );
+               
+            }
+            // if the user is returning, make sure they are currently renting the movie
+            
+            if(!isRenting && user.rentedMovies.indexOf(movieId) === -1 ){
+                throw newError ("Cannot Return Movie Not Rented", 409);
+            }
 
             res.json({
                 message:"Success",
@@ -74,7 +79,10 @@ router.patch(
 
             
         } catch (err) {
-            sendErr(err)
+            const errMsg = err.message || err;
+            const errStat = err.status || 500;
+
+            res.status(errStat).json({error:errMsg});
         }
     }
 )
