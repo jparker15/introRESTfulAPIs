@@ -34,7 +34,7 @@ body{
     background-color: lightpink;
 }
 
-.loginForm button{
+#submitLogin {
     border: 0;
     display: block;
     margin: 20px auto;
