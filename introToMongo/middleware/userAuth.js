@@ -9,7 +9,7 @@ module.exports = async (req,res,next) => {
     // console.log(jwtKey,headerKey);
   
 
-    const userToken = req.headers[headerKey];
+    const userToken = req.authKey;
 
     try {
         
