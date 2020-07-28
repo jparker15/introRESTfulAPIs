@@ -1,5 +1,5 @@
-const apiKey = process.env.MRENTAL_ADMIN;
 const User = require("../models/User");
+
 const jwt = require("jsonwebtoken");
 module.exports = async (req,res,next) => {
 
@@ -8,7 +8,7 @@ module.exports = async (req,res,next) => {
        HEAD_AUTH_KEY: headerKey
    } = process.env;
 
-   const userTkn = req.headers[headerKey];
+   const userTkn = req.authKey
 
 //    console.log(userTkn);
    
