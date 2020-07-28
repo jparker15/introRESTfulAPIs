@@ -1,5 +1,13 @@
 window.onload=()=>{
 
+    document.addEventListener("keydown", (event) =>{
+        if (event.keyCode === 13){
+            document.getElementById("submitLogin").click()
+        }
+    })
+
+    // console.log(document.cookie);
+
     document.getElementById("submitLogin").onclick = () =>{
     
        const email = document.getElementById("email").value;
@@ -38,7 +46,10 @@ window.onload=()=>{
                 alert("Login Failed")
             }
             else{
-                localStorage.setItem("loginToken",token);
+
+                document.cookie = `token=${token}`;
+                
+                // localStorage.setItem("loginToken",token);
 
                 location = `${location.origin}`;
             }
