@@ -1,5 +1,6 @@
 window.onload = () => {
 
+
     setEventListeners()
 
         //div containing elements/inputs of each movie
@@ -22,11 +23,11 @@ window.onload = () => {
 }
 
 function logoutUser (){
-    const token = localStorage.getItem("loginToken");
+    const token = document.cookie.indexOf("token");
     // console.log(token);
 
-    if (token !== null){
-        localStorage.removeItem("loginToken");
+    if (token !== -1){
+        document.cookie = "token=; expires =`Thu, 01 Jan 1970 00:00:00: UTC` ;path=/"; 
         alert("You have logged out")
     }
     else{
