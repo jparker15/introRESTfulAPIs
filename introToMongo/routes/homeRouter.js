@@ -1,6 +1,6 @@
 
         //express requirement
- const express = require("express"),
+const express = require("express"),
         //instance of express' Router()
     router = express.Router(),
         //model for Movie requirement
@@ -8,7 +8,9 @@
 
     adminAuth = require("../middleware/adminAuth"),
 
-    userAuth = require("../middleware/userAuth");
+    userAuth = require("../middleware/userAuth"),
+
+    extractCookie = require("../middleware/extractCookie");
 
         // router.get("/:request params/:reqParams",(req,res) =>{
         //     location = `${location.origin}/mrental`
@@ -25,13 +27,20 @@
         //@path (server path)/mrental
         //@access users 
 
-        router.get("/", async (req,res) =>{
+        router.get("/",
+                extractCookie,
+                async (req,res) =>{
+
+                const loggedIn = req.authkey != undefined;
+
+                const isAdmin = req.admin != undefined;
+
                                             //"nested object": {mongodb query selector:}
-            const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
+                const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
 
                 clientMsg = `Number of Movies:` + allMovies.length; 
 
-            res.render("home", {all_movies: allMovies, message: clientMsg})
+            res.render("home", {all_movies: allMovies, message: clientMsg, isLoggedIn: loggedIn, admin: isAdmin})
         });
 
 
