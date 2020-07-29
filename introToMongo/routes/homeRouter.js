@@ -10,14 +10,16 @@ const express = require("express"),
 
     userAuth = require("../middleware/userAuth"),
 
-    extractCookie = require("../middleware/extractCookie");
+    extractCookie = require("../middleware/extractCookie"),
+
+    isAdmin = require("../middleware/isAdmin");
 
         // router.get("/:request params/:reqParams",(req,res) =>{
         //     location = `${location.origin}/mrental`
         //     res.send("yah")
         // })
 
-        router.get("/login", (req,res) =>{
+        router.get("/login",(req,res) =>{
             res.render("login");
         })
 
@@ -29,18 +31,28 @@ const express = require("express"),
 
         router.get("/",
                 extractCookie,
+                isAdmin,
                 async (req,res) =>{
 
-                const loggedIn = req.authkey != undefined;
+                const loggedIn = req.authKey != undefined;
 
-                const isAdmin = req.admin != undefined;
+                // const isAdmin = req.admin != undefined;
 
                                             //"nested object": {mongodb query selector:}
                 const allMovies = await Movie.find({"inventory.available":{$gte:1}}),//matches values that are greater then or equal to a specified value
 
                 clientMsg = `Number of Movies:` + allMovies.length; 
 
-            res.render("home", {all_movies: allMovies, message: clientMsg, isLoggedIn: loggedIn, admin: isAdmin})
+                const admin = req.isAdmin === true;
+
+                const renderObj =  {
+                    all_movies: allMovies,
+                    message: clientMsg,
+                    isLoggedIn: loggedIn,
+                    isAdmin: admin
+                };
+
+            res.render("home",renderObj); 
         });
 
 
@@ -61,7 +73,10 @@ const express = require("express"),
         //@access admin jwt
 
 
-        router.get("/mrental/admin/",adminAuth,(req,res) =>{
+        router.get(
+            "/admin/",
+            extractCookie,
+            adminAuth,(req,res) =>{
 
             res.render("admin-movie")
 
