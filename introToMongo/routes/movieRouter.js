@@ -7,6 +7,7 @@
         const newError = require("../utils/newError");
 
         const findMovie = require("../middleware/findMovie");
+        const extractCookie = require("../middleware/extractCookie");
         const adminAuth = require("../middleware/adminAuth");
         const userAuth = require("../middleware/userAuth");
 
@@ -33,6 +34,7 @@
 
         router.patch(
             "/updinv",
+            extractCookie,
             adminAuth,
             async (req,res) =>{
 
@@ -188,6 +190,7 @@
 
     router.get(
         "/all",
+        extractCookie,
         userAuth,
         async (req,res) => {
 
@@ -294,8 +297,9 @@ router.get(
     // declaring async allows the use of synchronus i.e await specifies a line as synchornus
 router.delete(
     "/delete/:movieID", 
-    findMovie, 
-    adminAuth, 
+    findMovie,
+    extractCookie, 
+    adminAuth,
     async (req,res) => {
 
     console.log(req.params);
@@ -328,6 +332,7 @@ router.delete(
 
 router.patch(
     "/patch/:movieID",
+    extractCookie,
     adminAuth,
     findMovie,
     async (req,res) =>{
@@ -385,6 +390,7 @@ router.patch(
 
 router.patch(
     "/mpatch1",
+    extractCookie,
     adminAuth,
     async (req,res) =>{
 
@@ -418,6 +424,7 @@ router.patch(
 
 router.post(
     "/post",
+    extractCookie,
     adminAuth,
     async (req,res) =>{
                         //object constructor
