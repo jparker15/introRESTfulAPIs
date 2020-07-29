@@ -9,10 +9,17 @@ html
 
     body
         h1=message
+        if isLoggedIn
+            button#logoutBtn(style="display:inline") Logout 
+            //- button#loginBtn(style="display:none") Log In
+        else
+            //- button#logoutBtn(style="display:none") Logout 
+            button#loginBtn(style="display:inline") Log In
+        //- button#logoutBtn() Logout 
+        //- button#loginBtn() Log In
 
-        button#loginBtn() Log In
-        button#logoutBtn() Logout
-
+        if isAdmin
+            button#adminBtn Admin Page    
         #allMovies
             each movie in all_movies
                 if movie.inventory.available > 0
@@ -22,8 +29,6 @@ html
                             h3=movie.release
                             img(src=movie.img,alt=`${movie.title} IMG`)
                             a(href=movie.link)=`${movie.title} Wiki Page`
-                            button.getMovie Get More DB Info
-                            button.rentMovie Rent Movie
                         .editMovie
                             -const currentYear = new Date().getFullYear();
                             form
@@ -31,11 +36,14 @@ html
                                 input(type="number",placeholder="Release Year",name="release",min=currentYear-100,max=currentYear+2)
                                 input(type="url",placeholder="Wiki Link",name="link")
                                 input(type="url",placeholder="Wiki IMG url",name="img")
-                                button(type="button").submitEdit Submit Movie Edits
-                           
-                        .adminBtns
-                            button.deleteMovie Delete Movie from DB
-                            button.editMovieBtn Edit Movie in DB
+                                button(type="button").submitEdit Submit Movie Edit
+                        if isAdmin
+                            .adminBtns
+                                button.deleteMovie Delete Movie from DB
+                                button.editMovieBtn Edit Movie in DB
+                        else
+                            button.getMovie Get More DB Info
+                            button.rentMovie Rent Movie
  
 
 
