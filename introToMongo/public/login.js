@@ -6,6 +6,10 @@ window.onload=()=>{
         }
     })
 
+    document.getElementById("submitCancel").onclick =() =>{
+        location = location.origin
+    }
+
     // console.log(document.cookie);
 
     document.getElementById("submitLogin").onclick = () =>{
