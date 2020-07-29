@@ -28,7 +28,9 @@ function logoutUser (){
 
     if (token !== -1){
         document.cookie = "token=; expires =`Thu, 01 Jan 1970 00:00:00: UTC` ;path=/"; 
-        alert("You have logged out")
+        alert("You have logged out");
+        location.reload();
+    
     }
     else{
         alert("You are not logged in")
