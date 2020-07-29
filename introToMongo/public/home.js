@@ -14,12 +14,7 @@ window.onload = () => {
         //button to submit edit inputs/fetch PATCH req
     const editSubmit = document.getElementsByClassName("editMovieBtn");
 
-    document.getElementById("loginBtn").onclick = loginUser;
-
-    document.getElementById("logoutBtn").onclick = logoutUser;
-
     allMovies.style.display = "flex";
-    
 }
 
 function logoutUser (){
@@ -68,6 +63,28 @@ function setEventListeners (){
     for (const button of editSubmitBtns) {
         button.onclick = submitEditReq;
     }
+
+    const loginBtn =  document.getElementById("loginBtn");
+
+    if(loginBtn){
+        loginBtn.onclick = loginUser;
+    }
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if(logoutBtn){
+        logoutBtn.onclick = logoutUser; 
+    }
+
+    const adminBtn = document.getElementById("adminBtn");
+
+    if(adminBtn){
+        adminBtn.onclick = () =>{
+            location = `${location.origin}/admin`
+        }
+    }
+
+
     
 }
 
