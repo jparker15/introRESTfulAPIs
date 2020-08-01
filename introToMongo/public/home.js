@@ -117,19 +117,21 @@ function submitEditReq () { //id of mongoDB object
             }
 
 
-            if(iterator.name === "release" && inputValue < new Date().getFullYear() - 100 || inputValue > new Date().getFullYear() + 2)   {
+            // if(iterator.name === "release" 
+            // && inputValue < new Date().getFullYear() - 100 || inputValue > new Date().getFullYear() + 2)   {
                 
-                // console.log(iterator,inputValue);
-                return alert(`Release Year must between ${new Date().getFullYear() - 100} and ${new Date().getFullYear() + 2}`)
+            //     // console.log(iterator,inputValue);
+            //     return alert(`Release Year must between ${new Date().getFullYear() - 100} and ${new Date().getFullYear() + 2}`)
 
-            }
+            // }
 
             
         }
-            //test if link.value contains wiki anywhere in URL
-        if(!(new RegExp(/wiki/g).test(form.link))){
-            validationErr.push("WIKI Link Must include wiki")
-        }
+            // test if link.value contains wiki anywhere in URL
+        // const wikiRegExp = /wiki/g
+        // if(!(wikiRegExp.test(form.link))){
+        //     validationErr.push("WIKI Link Must include wiki")
+        // }
 
         if(validationErr.length > 0){
             const message = `Error/s :\n\n${validationErr.join("\n")}`;
@@ -221,17 +223,17 @@ function getMovieInfo (){
 
         //FETCH
 
-        const movieID = this.parentElement.parentElement.id,
+        const movieID = this.parentElement.id,
 
-            endpoint = `http://localhost:3015/movie/${movieID}`;
+            endpoint = `http://localhost:3015/movie/getmovie/${movieID}`;
 
         fetch(endpoint) 
         .then(rs => {
-            console.log(rs);
+            // console.log(rs);
             
             return rs.json()})
         .then(res =>{
-            console.log("res:",res);
+            console.log(res);
             
         })
 
