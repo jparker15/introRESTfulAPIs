@@ -18,7 +18,7 @@ function submitMovieReq() {
         reqBody[iterator.name] = iterator.value;
     }
     
-    reqBody.inventory = {available: parseInt(reqBody.inventory) , rented:0}
+    reqBody.inventory = {available: parseInt(reqBody.inventory) , rented:[]};
 
     console.log(reqBody);
     
@@ -48,7 +48,7 @@ function submitMovieReq() {
         
         // alert("YOU'VE MADE A NEW MOVIE");
 
-        location = `${location.origin}`;
+        // location = `${location.origin}`;
     })
 }
 function updateMovieReq() {
