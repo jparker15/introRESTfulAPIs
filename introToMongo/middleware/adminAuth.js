@@ -8,7 +8,11 @@ module.exports = async (req,res,next) => {
        HEAD_AUTH_KEY: headerKey
    } = process.env;
 
-   const userTkn = req.authKey
+   const userTkn = req.authKey;
+
+    // const userTkn = req.headers[headerKey];
+
+
 
 //    console.log(userTkn);
    
