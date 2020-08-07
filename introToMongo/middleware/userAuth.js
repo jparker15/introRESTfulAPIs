@@ -7,9 +7,11 @@ module.exports = async (req,res,next) => {
     const {JWT_SECRET: jwtKey , HEAD_AUTH_KEY:headerKey} = process.env;
 
     // console.log(jwtKey,headerKey);
-  
+    
 
     const userToken = req.authKey;
+
+    // const userToken = req.headers[headerKey];
 
     try {
         
