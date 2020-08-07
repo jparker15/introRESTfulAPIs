@@ -1,5 +1,7 @@
 window.onload = () => {
-
+    //set event listeners for buttons/s (rent/return)
+    // set up xhr ("patch") in the onclick event handler 
+        // proper responses to the client (alert, dom element update, dom event)
 
     setEventListeners()
 
@@ -84,8 +86,17 @@ function setEventListeners (){
         }
     }
 
+    const rentBtns = document.getElementsByClassName("rentBtn");
 
-    
+    for(const button of rentBtns){
+        button.onclick = rentMovie;
+    }
+    const returnBtns = document.getElementsByClassName("returnBtn");
+
+    for(const button of returnBtns){
+        button.onclick = returnMovie;
+    }
+
 }
 
 function submitEditReq () { //id of mongoDB object
@@ -284,4 +295,51 @@ function deleteMovie () {
         
     })
 
+}
+
+function rentMovie () {
+    // console.log(this.parentElement.id);
+
+    const movieId = this.parentElement.id;
+
+    // endpoint, reqBody, fetch req, parse msg from api req
+
+    const endpoint = `${location.origin}/user/rent_return`;
+
+    const reqBody = {
+        movieId: movieId,
+        isRenting: true
+    };
+
+    const reqObj = {
+
+        headers: { //allow access at all origins 
+            "Access-Control-Allow-Origin": "*",
+    
+            Accept: "application/json",
+    
+            "content-type": "application/json",
+            },
+    
+            method: "PATCH",
+    
+            body: JSON.stringify(reqBody)
+    
+    };
+
+
+
+    fetch(endpoint,reqObj)
+    .then(rs=> rs.json())
+    .then(res=>console.log(res))
+    .catch(err =>{
+        console.log({
+            error: err.message || err
+        });
+    })
+
+}
+
+function returnMovie(){
+    console.log(this.parentElement.id);
 }
