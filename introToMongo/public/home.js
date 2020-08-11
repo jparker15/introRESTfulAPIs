@@ -97,6 +97,11 @@ function setEventListeners (){
         button.onclick = returnMovie;
     }
 
+    const nonUserBtn = document.getElementsByClassName("nonUserBtn");
+    for(const button of nonUserBtn){
+        button.onclick = loginUser;
+    }
+
 }
 
 function submitEditReq () { //id of mongoDB object
@@ -298,7 +303,7 @@ function deleteMovie () {
 }
 
 function rentMovie () {
-    // console.log(this.parentElement.id);
+    // console.log(document.cookie);
 
     const movieId = this.parentElement.id;
 
@@ -308,10 +313,11 @@ function rentMovie () {
 
     const reqBody = {
         movieId: movieId,
-        isRenting: true
+        isRenting: true,
+        
     };
 
-    const reqObj = {
+    const reqOpts = {
 
         headers: { //allow access at all origins 
             "Access-Control-Allow-Origin": "*",
@@ -329,8 +335,15 @@ function rentMovie () {
 
 
 
-    fetch(endpoint,reqObj)
-    .then(rs=> rs.json())
+    fetch(endpoint,reqOpts)
+    .then(rs=> {
+        if(rs === 200){
+            alert ("Successful Movie Rental")        
+        }
+        else {
+            alert ("can not rent movie twice")
+        }
+})
     .then(res=>console.log(res))
     .catch(err =>{
         console.log({
@@ -342,4 +355,49 @@ function rentMovie () {
 
 function returnMovie(){
     console.log(this.parentElement.id);
+
+    const movId = this.parentElement.id;
+
+    const endpoint = `${location.origin}/user/rent_return`;
+
+    const reqBody = {
+        isRenting: false,
+        movieId: movId,
+    };
+
+    const reqOpts = {
+
+       headers: {"Access-Control-Allow-Origin" :"*",
+
+        Accept: "application/json",
+        
+        "content-type":"application/json",
+        },
+        method: "PATCH",
+
+        body: JSON.stringify(reqBody)
+    };
+
+    fetch(endpoint,reqOpts)
+    .then(rs=>{
+
+        if (rs.status === 200){
+            alert("Successful Movie Return")
+        }
+        else{
+            const resMsg = `can not return movie twice`
+            alert(resMsg)
+        }
+    })
+        
+    .then(res=> console.log(res))
+    .catch(err=>{
+        const errMsg = err.message||err;
+
+        console.log({
+            error: errMsg
+        })
+    })
+
+
 }
