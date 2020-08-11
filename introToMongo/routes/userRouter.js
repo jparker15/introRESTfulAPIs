@@ -17,9 +17,11 @@ const adminAuth = require("../middleware/adminAuth");
 const newError = require("../utils/newError");
 //endware
 const sendErr = require("../endware/sendErr");
+const extractCookie = require("../middleware/extractCookie");
 
 router.patch(
     "/rent_return",
+    extractCookie,
     userAuth,
     async (req,res)=>{
         const {movieId, isRenting = true} = req.body;
