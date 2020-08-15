@@ -23,10 +23,14 @@ const express = require("express"),
             res.render("login");
         })
 
+        router.get("/register", (req,res) =>{
+            res.render("register");
+        })
+
         //default GET route
         //localhost:3015/mrental
         //@desc post/ movie database page
-        //@path (server path)/mrental
+        //@path (server path)/
         //@access users 
 
         router.get("/",
@@ -52,7 +56,7 @@ const express = require("express"),
                     isAdmin: admin
                 };
 
-            res.render("home",renderObj); 
+            res.render("home",renderObj);  
         });
 
 
