@@ -102,6 +102,13 @@ function setEventListeners (){
         button.onclick = loginUser;
     }
 
+    const regPgBtn = document.getElementById("regPageBtn");
+    if(regPgBtn){
+        regPgBtn.onclick = () =>{
+            location = `${location.origin}/register`
+        }
+    }
+
 }
 
 function submitEditReq () { //id of mongoDB object
