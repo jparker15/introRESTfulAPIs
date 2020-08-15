@@ -439,6 +439,8 @@ router.post(
 
         const newMovie = await Movie.create(req.body);
 
+        console.log(newMovie);
+
         res.status(201).json({
             status: 201,
             new_movie: newMovie,
