@@ -1,10 +1,11 @@
 body{
-    background-color: rgba(165, 28, 28, 0.95);
+    background-color: rgba(0, 0, 0, 0.666);
     color: blanchedalmond;
     margin: 0;
     padding: 0;
 }
-.loginForm{
+
+.registForm {
     background-color: lightcoral;
     width: 300px;
     padding: 40px;
@@ -16,7 +17,8 @@ body{
     border-radius: 50px;
 }
 
-.loginForm input[type="email"], input[type="password"]{
+
+.registForm input[type="email"], .registForm input[type="password"]{
     background-color:rgba(128, 128, 128, 0.476);
     border: 0;
     display: block;
@@ -28,13 +30,13 @@ body{
     transition: .25s;
 }
 
-.loginForm input[type="email"]:hover,.loginForm input[type="password"]:hover{
+.registForm input[type="email"]:hover,.registForm input[type="password"]:hover{
     width: 300px;
     border-color: lightgreen;
     background-color: lightpink;
 }
 
-.loginForm input[type="button"] {
+.registForm input[type="button"] {
     border: 0;
     display: flex;
     flex-direction: column;
@@ -44,18 +46,18 @@ body{
     padding: 14px 10px;
     border-radius: 24px;
     transition: .5s;
-    width: 50px;
+    width: 150px;
     background-color:rgba(128, 128, 128, 0.476);
 }
 
-.loginForm input[type="button"]:hover{
+.registForm input[type="button"]:hover{
     background-color: lightpink;
 }
 
-#submitCancel:hover {
+#cancelReg:hover {
     background-color:rgb(255, 119, 119) ;
     border-color: rgba(231, 56, 56, 0.605);
 }
-#submitCancel:active {
+#cancelReg:active {
     background-color:red ;
 }
