@@ -1,7 +1,6 @@
 html
     head
-        title   Register for Movie Rental 
-
+        title   Register a New User
         script
             include ../public/register.js
 
@@ -15,8 +14,12 @@ html
             
             form.registForm
                 h1 Register a New User
+                label.lables Enter Email
                 input#email(placeholder="Enter a Email",type="email", name="email")
-                input#password(placeholder = "Enter a Password",type="password",name="password",minLength=7)
-                input#conPass(placeholder = "Confirm the Password",type="password",name="password",minLength=7)
+                label.lables Enter Password
+                input#password(placeholder = "Enter a Password",type="password",name="password",inLength=7)
+                label.lables Confirm Password
+                input#conPass(placeholder = "Confirm the Password",type="password",name="conpass",minLength=7)
                 input#submitReg(type="button", value= "Register")
                 input#cancelReg(type="button", value="Cancel")
+                h5#passMsg(style="display:none")
