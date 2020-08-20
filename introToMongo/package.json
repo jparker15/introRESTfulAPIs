@@ -12,14 +12,15 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "brcypt": "^1.0.1",
     "cookie": "^0.4.1",
     "cookies": "^0.8.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.17",
+    "mongoose": "^5.10.0",
     "pug": "^3.0.0",
-    "validator": "^13.0.0"
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
