@@ -8,8 +8,39 @@ window.onload = () => {
 }
 
 const passwordCheck = () =>{
-    const pass1 = document.getElementById("password")
-    const pass1 = document.getElementById("password")
+    const pass = document.getElementById("password");
+    const conpass = document.getElementById("conpass");
+    const passMsg = document.getElementById("passMsg");
+
+    if(pass.value.trim() == "" || conpass.value.trim() == ""){
+        passMsg.style.display = "none";
+    }
+
+    pass.onkeyup = () =>{
+        passMsg.style.display = "inline";
+        if(pass.value.length >=7 && pass.value != conpass.value){
+            passMsg.innerText = "passwords do not match";
+            passMsg.style.color = "red";
+        }
+        if(pass.value === conpass.value){
+            passMsg.innerText = "issa Match"
+            passMsg.style.color = "green";
+        }
+    }
+
+    conpass.onkeyup = () =>{
+        passMsg.style.display = "inline";
+        if(conpass.value.length >= 7 && conpass.value != pass.value){
+            passMsg.innerText = "please confirm password";
+            passMsg.style.color = "maroon";
+        }
+        if(conpass.value === conpass.value){
+            passMsg.innerText = "Issa match"
+            passMsg.style.color = "lightgreen"
+        }
+    }
+
+
 }
 
 //xhr posts
