@@ -5,6 +5,7 @@ module.exports = async (req,res,next) =>{
 
     const email = req.body.email,
         pass = req.body.password,
+        username = req.body.username,
         failedValues = [];
 
     if (!validator.isEmail(email)){
@@ -24,7 +25,29 @@ module.exports = async (req,res,next) =>{
         })
     }
 
-    if (!validator.isLength(pass,{min: 7, max: 25}) || !validator.isAlphanumeric(pass, "en-US")){
+    const usernameExist = await User.findOne({username:username}) != null; 
+
+    if (usernameExist){
+        failedValues.push({
+            key:"username",
+            message: "Username Already In Use"
+        })
+    }
+
+    if (!validator.isLength(username,{min: 3, max: 20}) || !validator.isAlphanumeric(username, "en-US")){
+        failedValues.push({
+            key:"username",
+            message: "Character Amount Failed Requirements OR Used Invalid Character"
+        })
+    }
+
+    if (failedValues.length > 0 ){
+       return res.status(400).json({
+            validation_err: failedValues
+        })
+    }
+
+    if (!validator.isLength(pass,{min: 7, max: 100}) || !validator.isAlphanumeric(pass, "en-US")){
         failedValues.push({
             key:"password",
             message: "Character Amount Failed Requirements OR Used Invalid Character"
