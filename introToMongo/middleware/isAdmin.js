@@ -31,6 +31,8 @@ module.exports = async (req,res,next)=> {
             
             req.isAdmin = true === adCheck.adminProp.isAdmin; 
 
+            req.userId = decryptedId.id;
+
             // console.log(req.isAdmin);
 
         next()
