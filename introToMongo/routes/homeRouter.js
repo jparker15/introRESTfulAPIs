@@ -6,6 +6,8 @@ const express = require("express"),
         //model for Movie requirement
     Movie = require("../models/Movie"),
 
+    User = require("../models/User"),
+
     adminAuth = require("../middleware/adminAuth"),
 
     userAuth = require("../middleware/userAuth"),
@@ -47,7 +49,7 @@ const express = require("express"),
 
                 clientMsg = `Number of Movies:` + allMovies.length; 
 
-                const admin = req.isAdmin === true;
+                const admin = req.isAdmin || false;
 
                 const renderObj =  {
                     all_movies: allMovies,
@@ -85,6 +87,36 @@ const express = require("express"),
             res.render("admin-movie")
 
         });
+
+        router.get(
+            "/profiles/:username",
+            extractCookie,
+            isAdmin,
+            async (req,res) =>{
+
+                const profileOwner = await User.findOne({username: req.params.username});
+
+                if(profileOwner === null){
+                   return res.redirect("/")
+                }
+                
+                const viewingUser = await User.findById(req.userId);
+
+                // const usersAll = await User.find()
+                
+
+                    // res.json({"profile":profileOwner,"viewing":viewingOwner,users:usersAll});
+                const renderOpt = {
+                    proUsername:profileOwner.username,
+                    rentingMovies:profileOwner.rentedMovies,
+                    viewerRented: viewingUser === null ? [] : viewingUser.rentedMovies, 
+                }
+                
+                res.render("profile",renderOpt);
+               
+
+            }
+        )
 
         //html work in progress
 
